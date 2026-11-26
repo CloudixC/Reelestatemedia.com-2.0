@@ -3,8 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Reel Estate Media</title>
-<meta name="description" content="Reel Estate Media. Listing reels, brand films and private reel libraries for brokerages and agents across the GTA.">
+<title>Reel Estate Media | Real estate reels, listing video and photos in the GTA</title>
+<meta name="description" content="Reel Estate Media is a real estate media studio in the Greater Toronto Area. Social reels, listing video and photos, property films and event recaps for agents and brokerages. See the work, see the prices and book online.">
+<link rel="canonical" href="https://reelestatemedia.com/">
+<link rel="icon" type="image/png" sizes="32x32" href="media/icon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="media/icon-192.png">
+<link rel="apple-touch-icon" href="media/icon-180.png">
+<meta name="theme-color" content="#0A0F0C">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Reel Estate Media">
+<meta property="og:url" content="https://reelestatemedia.com/">
+<meta property="og:title" content="Reel Estate Media | Where listings get reel">
+<meta property="og:description" content="Social reels, listing video and photos for real estate agents and brokerages across the GTA. See the work and book online.">
+<meta property="og:image" content="https://reelestatemedia.com/media/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&amp;family=Inter:wght@400;500;600&amp;family=Montserrat:wght@800&amp;display=swap" rel="stylesheet">
@@ -324,6 +338,30 @@ dialog#player::backdrop{background:#050806}
   html{scroll-behavior:auto}
   .reel,.tile .sq,.thumb,.btn{transition:none}
 }
+
+/* ---------- who we are, contact, agent links ---------- */
+.pick .kick{color:var(--sage);font-size:11px}
+.pick .lead{max-width:54ch;line-height:1.55}
+.pick .reach{margin-top:30px;font-size:13px;color:var(--mute);display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:center}
+.pick .reach a{color:var(--soft);min-height:28px;display:inline-flex;align-items:center}
+.pick .reach a:hover{color:var(--cream)}
+.card .g a,.pi p a{color:inherit;text-decoration:underline;text-decoration-color:rgba(244,239,228,.3);text-underline-offset:3px}
+.card .g a:hover,.pi p a:hover{color:var(--cream)}
+.card .vw{font-size:12px;color:var(--sage)}
+#about{padding:0 40px 88px}
+.ab{max-width:1160px;margin:0 auto;border-top:1px solid var(--line);padding-top:56px;display:flex;flex-wrap:wrap;gap:36px 56px;justify-content:space-between}
+.ab .l{flex:1 1 440px;display:flex;flex-direction:column;gap:14px}
+.ab .eyebrow{color:var(--sage)}
+.ab h2{font-size:clamp(28px,3.2vw,38px);line-height:1.1}
+.ab p{color:var(--mute);max-width:58ch;line-height:1.65}
+.ab .ct{flex:0 1 320px;display:flex;flex-direction:column;gap:6px;font-size:16px}
+.ab .ct a{color:var(--cream);min-height:32px;display:inline-flex;align-items:center}
+.ab .ct a:hover{color:var(--sage)}
+.ab .ct span{font-size:13px;color:var(--mute);margin-top:8px}
+footer .f a.fc{color:var(--mute)}
+footer .f a.fc:hover{color:var(--cream)}
+#pnote{font-size:13px;color:#7A2E1E}
+@media(max-width:860px){#about{padding:0 16px 64px}.ab{padding-top:40px}}
 </style>
 </head>
 <body>
@@ -334,16 +372,18 @@ dialog#player::backdrop{background:#050806}
   <div class="veil" aria-hidden="true"></div>
   <header><a class="logo" href="#profiles" aria-label="Reel Estate Media"><i aria-hidden="true"></i><b>REEL ESTATE MEDIA</b></a></header>
   <div class="pick">
+    <span class="eyebrow kick">Real estate media studio · Greater Toronto Area</span>
     <h1 class="serif">Who's watching?</h1>
-    <p class="lead">Partner brokerages sign in to their own private library.</p>
+    <p class="lead">We film reels, listing video and photos for real estate agents and brokerages. Pick a profile to see the work. Partner brokerages sign in to their own private library.</p>
     <div class="tiles" id="tiles"></div>
     <a class="cta" href="#solo" data-book>Not a partner yet? Book a shoot</a>
     <div class="views" id="views">
-      <div class="vrow"><b data-total>511,006</b><span>views</span></div>
+      <div class="vrow"><b data-total>511,833</b><span>views</span></div>
       <small>across Instagram, on <i data-count>133</i> reels we have shot and edited</small>
       <span class="vgain" id="vgain" hidden></span>
       <a class="igb" href="https://www.instagram.com/thereelestatemedia/" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4.2"></circle><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"></circle></svg><span>Follow @thereelestatemedia</span></a>
     </div>
+    <p class="reach"><a href="tel:+14162576131">Call or text (416) 257-6131</a><a href="mailto:hello@reelestatemedia.com">hello@reelestatemedia.com</a></p>
   </div>
 </section>
 
@@ -433,6 +473,7 @@ dialog#player::backdrop{background:#050806}
         </article>
       </div>
       <div class="plist" id="prices"></div>
+      <p id="pnote" hidden>Your office rates could not be loaded, so these are our standard rates. Refresh the page to try again.</p>
       <p class="pfine">Prices are in Canadian dollars, plus HST. Weekend shoots and shoots between 6 and 8 am or 6 and 9 pm carry a $50 fee.</p>
     </div>
   </section>
@@ -449,6 +490,24 @@ dialog#player::backdrop{background:#050806}
         <a class="btn ghost" href="https://calendly.com/hello-reelestatemedia/initial-consultation" target="_blank" rel="noopener">Book an initial consultation</a>
         <a class="btn ghost" href="#packages" data-scroll="packages">See every price</a>
         <p>Booking opens in a new tab. Every agent who books gets their own Content Hub to review and download the work.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="ab">
+      <div class="l">
+        <span class="eyebrow">About us</span>
+        <h2 class="serif">A media studio built for real estate.</h2>
+        <p>Reel Estate Media shoots and edits for real estate agents and brokerages across the Greater Toronto Area: social reels, listing video and photos, property films, headshots and event recaps. Our partner brokerages include Royal LePage Pinnacle and RE/MAX Skyway, and we work with independent agents the same way.</p>
+        <p>Every reel in this library is our own work, filmed and edited by us. You book online, we confirm by phone, and you review and download everything in your own Content Hub.</p>
+      </div>
+      <div class="ct">
+        <span class="eyebrow">Get in touch</span>
+        <a href="tel:+14162576131">(416) 257-6131</a>
+        <a href="mailto:hello@reelestatemedia.com">hello@reelestatemedia.com</a>
+        <a href="https://www.instagram.com/thereelestatemedia/" target="_blank" rel="noopener">@thereelestatemedia on Instagram</a>
+        <span>Serving Toronto, Mississauga, Brampton, Vaughan and the rest of the GTA.</span>
       </div>
     </div>
   </section>
@@ -501,13 +560,14 @@ dialog#player::backdrop{background:#050806}
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- the reels: every finished reel in the Vault. The list between the markers is written by build_lib.py ---------- */
-  var LIB=/*LIB*/[{"k":"v09","t":"Mavis & Dundas","a":"Faiz Tahir","co":"P","c":"precon","l":"1:02","dt":"2026-11-25"},{"k":"v10","t":"Night drive","a":"Faiz Tahir","co":"P","c":"brand","l":"0:29","dt":"2026-11-23","w":1},{"k":"v12","t":"Cornerstone","a":"Jas Chohan","co":"P","c":"precon","l":"0:25","dt":"2026-11-22"},{"k":"v11","t":"Abacot Hill","a":"Jas Chohan","co":"P","c":"precon","l":"0:30","dt":"2026-11-22"},{"k":"v02","t":"32 Camberley Rd, Brampton","a":"Param Bajarh","co":"S","c":"listings","l":"1:06","dt":"2026-11-21"},{"k":"v01","t":"Kozak ad","a":"Tejvir Dhuga","co":"S","c":"brand","l":"0:37","dt":"2026-11-21"},{"k":"v13","t":"End of year goals","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:39","dt":"2026-11-20"},{"k":"v14","t":"Elements","a":"Safwat Butt","co":"P","c":"precon","l":"0:32","dt":"2026-11-18"},{"k":"v03","t":"LoopNet","a":"Tejvir Dhuga","co":"S","c":"brand","l":"0:34","dt":"2026-11-18"},{"k":"v15","t":"Abacot Hill","a":"Jasi Shoker","co":"P","c":"precon","l":"0:36","dt":"2026-11-14"},{"k":"v07","t":"Milton pre-construction","a":"Tanuj Rajpal","co":"Remax Millenium","c":"precon","l":"0:44","dt":"2026-11-14"},{"k":"v19","t":"Five Oaks","a":"Alex Tang","co":"P","c":"precon","l":"0:10","dt":"2026-11-13"},{"k":"v18","t":"Punjabi reel","a":"Jas Chohan","co":"P","c":"brand","l":"0:50","dt":"2026-11-13"},{"k":"v17","t":"Advice series, bonus reel","a":"Zain Merchant","co":"P","c":"brand","l":"1:04","dt":"2026-11-13"},{"k":"v16","t":"Team training","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"0:50","dt":"2026-11-13"},{"k":"v27","t":"Cornerstone","a":"Noah Lakhani","co":"P","c":"precon","l":"0:13","dt":"2026-11-10"},{"k":"v26","t":"Milton buyers","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:26","dt":"2026-11-10"},{"k":"v25","t":"Oakville buyers","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:19","dt":"2026-11-10"},{"k":"v24","t":"Agents","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:14","dt":"2026-11-10"},{"k":"v23","t":"Advice series, part 10","a":"Zain Merchant","co":"P","c":"brand","l":"0:36","dt":"2026-11-10"},{"k":"v22","t":"Happy Halloween","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"0:36","dt":"2026-11-10"},{"k":"v21","t":"Royal LePage National Sales Conference 2026, short cut","a":"Faiz Tahir","co":"P","c":"events","l":"0:50","dt":"2026-11-10","w":1},{"k":"v20","t":"Royal LePage National Sales Conference 2026","a":"Faiz Tahir","co":"P","c":"events","l":"2:18","dt":"2026-11-10","w":1},{"k":"v04","t":"Diwali","a":"Tejvir Dhuga","co":"S","c":"brand","l":"0:46","dt":"2026-11-10"},{"k":"v05","t":"Office tour","a":"Tejvir Dhuga","co":"S","c":"brand","l":"0:59","dt":"2026-11-07"},{"k":"v06","t":"Wealth Summit","a":"Preeya Cheema","co":"PKC Law","c":"events","l":"0:53","dt":"2026-11-05"},{"k":"v29","t":"Hindi reel","a":"Jas Chohan","co":"P","c":"brand","l":"0:42","dt":"2026-11-04"},{"k":"v28","t":"English reel","a":"Jas Chohan","co":"P","c":"brand","l":"0:35","dt":"2026-11-04"},{"k":"v31","t":"OG Towns event recap, part 2","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"0:36","dt":"2026-11-03"},{"k":"v30","t":"OG Towns event recap, part 1","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:05","dt":"2026-11-03"},{"k":"v33","t":"Cornerstone by Primont","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:19","dt":"2026-10-22"},{"k":"v32","t":"Abacot Hill by Hallet Homes","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:26","dt":"2026-10-22"},{"k":"v38","t":"Five Oaks","a":"Salman Syed Laiq","co":"P","c":"precon","l":"0:37","dt":"2026-10-12"},{"k":"v37","t":"The team","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:14","dt":"2026-10-12"},{"k":"v36","t":"Five Oaks","a":"Ali Mansoor Malik","co":"P","c":"precon","l":"0:35","dt":"2026-10-12"},{"k":"v35","t":"Advice series, part 7","a":"Zain Merchant","co":"P","c":"brand","l":"0:28","dt":"2026-10-12"},{"k":"v34","t":"Five Oaks event recap","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:18","dt":"2026-10-12"},{"k":"v44","t":"Five Oaks","a":"Yovan Gabric","co":"P","c":"precon","l":"0:22","dt":"2026-10-10"},{"k":"v43","t":"OG Towns","a":"Sofia Badruddin","co":"P","c":"precon","l":"0:31","dt":"2026-10-10"},{"k":"v42","t":"Five Oaks","a":"Sofia Badruddin","co":"P","c":"precon","l":"0:22","dt":"2026-10-10"},{"k":"v41","t":"Five Oaks","a":"Syed Naqvi","co":"P","c":"precon","l":"0:14","dt":"2026-10-10"},{"k":"v40","t":"Five Oaks","a":"Safwat Butt","co":"P","c":"precon","l":"0:13","dt":"2026-10-10"},{"k":"v39","t":"Five Oaks","a":"Faiz Tahir","co":"P","c":"precon","l":"0:25","dt":"2026-10-10"},{"k":"v47","t":"OG Towns","a":"Jas Chohan","co":"P","c":"precon","l":"0:37","dt":"2026-10-07"},{"k":"v46","t":"Five Oaks","a":"Jas Chohan","co":"P","c":"precon","l":"0:31","dt":"2026-10-07"},{"k":"v45","t":"OG Towns","a":"Humza Khan","co":"P","c":"precon","l":"0:25","dt":"2026-10-07"},{"k":"v48","t":"Five Oaks","a":"Ali Mansoor Malik","co":"P","c":"precon","l":"0:35","dt":"2026-10-05"},{"k":"v54","t":"South Banks","a":"Ali Mansoor Malik","co":"P","c":"precon","l":"0:18","dt":"2026-10-01"},{"k":"v53","t":"Before real estate, part 2","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:59","dt":"2026-10-01"},{"k":"v52","t":"Office tour","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:39","dt":"2026-10-01","w":1},{"k":"v51","t":"Recruitment, part 3","a":"Faiz Tahir","co":"P","c":"recruiting","l":"0:13","dt":"2026-10-01"},{"k":"v50","t":"Recruitment, part 2","a":"Faiz Tahir","co":"P","c":"recruiting","l":"0:12","dt":"2026-10-01"},{"k":"v49","t":"Recruitment, part 1","a":"Faiz Tahir","co":"P","c":"recruiting","l":"0:21","dt":"2026-10-01"},{"k":"v08","t":"Listing walkthrough","a":"Matien Nazier","co":"Royal LePage Certified","c":"listings","l":"0:51","dt":"2026-10-01"},{"k":"v55","t":"Documentary-style reel","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:37","dt":"2026-09-22"},{"k":"v56","t":"Cash grab","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:07","dt":"2026-09-20"},{"k":"v59","t":"Advice series, part 8","a":"Zain Merchant","co":"P","c":"brand","l":"0:26","dt":"2026-09-17"},{"k":"v58","t":"Advice series, part 6","a":"Zain Merchant","co":"P","c":"brand","l":"0:44","dt":"2026-09-17"},{"k":"v57","t":"Advice series, part 5","a":"Zain Merchant","co":"P","c":"brand","l":"0:17","dt":"2026-09-17"},{"k":"v61","t":"Aura, final phase","a":"Faiz Tahir","co":"P","c":"precon","l":"0:37","dt":"2026-09-15"},{"k":"v60","t":"Commercial advert","a":"Faiz Tahir","co":"P","c":"brand","l":"0:38","dt":"2026-09-15"},{"k":"v63","t":"Trunk reel with Ayesha","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:14","dt":"2026-09-04"},{"k":"v62","t":"Advice series, part 4","a":"Zain Merchant","co":"P","c":"brand","l":"1:07","dt":"2026-09-04"},{"k":"v64","t":"Appreciation Day","a":"Salman Syed Laiq","co":"P","c":"events","l":"0:27","dt":"2026-09-03"},{"k":"v65","t":"Intro with Ayesha","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:16","dt":"2026-09-02"},{"k":"v66","t":"Crew walk","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:10","dt":"2026-08-24"},{"k":"v67","t":"Scott & Faiz","a":"Faiz Tahir","co":"P","c":"brand","l":"0:25","dt":"2026-08-17"},{"k":"v69","t":"Faiz’s story, part 2","a":"Faiz Tahir","co":"P","c":"brand","l":"0:20","dt":"2026-08-12"},{"k":"v68","t":"Faiz’s story, part 1","a":"Faiz Tahir","co":"P","c":"brand","l":"0:12","dt":"2026-08-12"},{"k":"v70","t":"New bungalow in Burlington","a":"Syed Naqvi","co":"P","c":"listings","l":"0:21","dt":"2026-08-08"},{"k":"v71","t":"Chris Leader workshop","a":"Faiz Tahir","co":"P","c":"events","l":"0:34","dt":"2026-08-07"},{"k":"v72","t":"Before real estate, part 1","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:47","dt":"2026-07-28"},{"k":"v74","t":"Advice series, part 3","a":"Zain Merchant","co":"P","c":"brand","l":"1:01","dt":"2026-07-22"},{"k":"v73","t":"Advice series, part 1","a":"Zain Merchant","co":"P","c":"brand","l":"0:57","dt":"2026-07-22"},{"k":"v76","t":"Join Pinnacle","a":"Royal LePage Pinnacle","co":"P","c":"recruiting","l":"0:46","dt":"2026-07-21"},{"k":"v75","t":"G-Wagon pickup","a":"Faiz Tahir","co":"P","c":"brand","l":"1:06","dt":"2026-07-21"},{"k":"v77","t":"Gravenhurst","a":"Harris Durrani","co":"P","c":"listings","l":"0:58","dt":"2026-07-15"},{"k":"v78","t":"Pre-construction training and Oakville tour","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:07","dt":"2026-07-09"}]/*END*/;
+  var LIB=/*LIB*/[{"k":"v09","t":"Mavis & Dundas","a":"Faiz Tahir","co":"P","c":"precon","l":"1:02","dt":"2026-11-25"},{"k":"v10","t":"Night drive to the office","a":"Faiz Tahir","co":"P","c":"brand","l":"0:29","dt":"2026-11-23","w":1},{"k":"v12","t":"Cornerstone","a":"Jas Chohan","co":"P","c":"precon","l":"0:25","dt":"2026-11-22"},{"k":"v11","t":"Abacot Hill","a":"Jas Chohan","co":"P","c":"precon","l":"0:30","dt":"2026-11-22"},{"k":"v02","t":"32 Camberley Rd, Brampton","a":"Param Bajarh","co":"S","c":"listings","l":"1:06","dt":"2026-11-21"},{"k":"v01","t":"Kozak ad","a":"Tejvir Dhuga","co":"S","c":"brand","l":"0:37","dt":"2026-11-21"},{"k":"v13","t":"End of year goals","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:39","dt":"2026-11-20"},{"k":"v14","t":"Elements","a":"Safwat Butt","co":"P","c":"precon","l":"0:32","dt":"2026-11-18"},{"k":"v03","t":"LoopNet","a":"Tejvir Dhuga","co":"S","c":"brand","l":"0:34","dt":"2026-11-18"},{"k":"v15","t":"Abacot Hill","a":"Jasi Shoker","co":"P","c":"precon","l":"0:36","dt":"2026-11-14"},{"k":"v07","t":"Milton pre-construction","a":"Tanuj Rajpal","co":"Remax Millenium","c":"precon","l":"0:44","dt":"2026-11-14"},{"k":"v19","t":"Five Oaks","a":"Alex Tang","co":"P","c":"precon","l":"0:10","dt":"2026-11-13"},{"k":"v18","t":"Punjabi reel","a":"Jas Chohan","co":"P","c":"brand","l":"0:50","dt":"2026-11-13"},{"k":"v17","t":"Upsizing your home","a":"Zain Merchant","co":"P","c":"brand","l":"1:04","dt":"2026-11-13"},{"k":"v16","t":"Team training","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"0:50","dt":"2026-11-13"},{"k":"v27","t":"Cornerstone","a":"Noah Lakhani","co":"P","c":"precon","l":"0:13","dt":"2026-11-10"},{"k":"v26","t":"Milton buyers","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:26","dt":"2026-11-10"},{"k":"v25","t":"Oakville buyers","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:19","dt":"2026-11-10"},{"k":"v24","t":"Agents","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:14","dt":"2026-11-10"},{"k":"v23","t":"Thinking about selling your home?","a":"Zain Merchant","co":"P","c":"brand","l":"0:36","dt":"2026-11-10"},{"k":"v22","t":"Happy Halloween","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"0:36","dt":"2026-11-10"},{"k":"v21","t":"Royal LePage National Sales Conference 2026, short cut","a":"Faiz Tahir","co":"P","c":"events","l":"0:50","dt":"2026-11-10","w":1},{"k":"v20","t":"Royal LePage National Sales Conference 2026","a":"Faiz Tahir","co":"P","c":"events","l":"2:18","dt":"2026-11-10","w":1},{"k":"v04","t":"Diwali","a":"Tejvir Dhuga","co":"S","c":"brand","l":"0:46","dt":"2026-11-10"},{"k":"v05","t":"Office tour","a":"Tejvir Dhuga","co":"S","c":"brand","l":"0:59","dt":"2026-11-07"},{"k":"v06","t":"Wealth Summit","a":"Preeya Cheema","co":"PKC Law","c":"events","l":"0:53","dt":"2026-11-05"},{"k":"v29","t":"Hindi reel","a":"Jas Chohan","co":"P","c":"brand","l":"0:42","dt":"2026-11-04"},{"k":"v28","t":"English reel","a":"Jas Chohan","co":"P","c":"brand","l":"0:35","dt":"2026-11-04"},{"k":"v31","t":"OG Towns event recap, part 2","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"0:36","dt":"2026-11-03"},{"k":"v30","t":"OG Towns event recap, part 1","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:05","dt":"2026-11-03"},{"k":"v33","t":"Cornerstone by Primont","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:19","dt":"2026-10-22"},{"k":"v38","t":"Five Oaks","a":"Salman Syed Laiq","co":"P","c":"precon","l":"0:37","dt":"2026-10-12"},{"k":"v37","t":"The team","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:14","dt":"2026-10-12"},{"k":"v36","t":"Five Oaks","a":"Ali Mansoor Malik","co":"P","c":"precon","l":"0:35","dt":"2026-10-12"},{"k":"v35","t":"Buy a home with only $25,000","a":"Zain Merchant","co":"P","c":"brand","l":"0:28","dt":"2026-10-12"},{"k":"v34","t":"Five Oaks event recap","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:18","dt":"2026-10-12"},{"k":"v44","t":"Five Oaks","a":"Yovan Gabric","co":"P","c":"precon","l":"0:22","dt":"2026-10-10"},{"k":"v43","t":"OG Towns","a":"Sofia Badruddin","co":"P","c":"precon","l":"0:31","dt":"2026-10-10"},{"k":"v42","t":"Five Oaks","a":"Sofia Badruddin","co":"P","c":"precon","l":"0:22","dt":"2026-10-10"},{"k":"v41","t":"Five Oaks","a":"Syed Naqvi","co":"P","c":"precon","l":"0:14","dt":"2026-10-10"},{"k":"v40","t":"Five Oaks","a":"Safwat Butt","co":"P","c":"precon","l":"0:13","dt":"2026-10-10"},{"k":"v39","t":"Five Oaks","a":"Faiz Tahir","co":"P","c":"precon","l":"0:25","dt":"2026-10-10"},{"k":"v47","t":"OG Towns","a":"Jas Chohan","co":"P","c":"precon","l":"0:37","dt":"2026-10-07"},{"k":"v46","t":"Five Oaks","a":"Jas Chohan","co":"P","c":"precon","l":"0:31","dt":"2026-10-07"},{"k":"v45","t":"OG Towns","a":"Humza Khan","co":"P","c":"precon","l":"0:25","dt":"2026-10-07"},{"k":"v48","t":"Five Oaks","a":"Ali Mansoor Malik","co":"P","c":"precon","l":"0:35","dt":"2026-10-05"},{"k":"v54","t":"South Banks","a":"Ali Mansoor Malik","co":"P","c":"precon","l":"0:18","dt":"2026-10-01"},{"k":"v53","t":"Before real estate, part 2","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:59","dt":"2026-10-01"},{"k":"v52","t":"Office tour","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:39","dt":"2026-10-01","w":1},{"k":"v51","t":"Recruitment, part 3","a":"Faiz Tahir","co":"P","c":"recruiting","l":"0:13","dt":"2026-10-01"},{"k":"v50","t":"Recruitment, part 2","a":"Faiz Tahir","co":"P","c":"recruiting","l":"0:12","dt":"2026-10-01"},{"k":"v49","t":"Recruitment, part 1","a":"Faiz Tahir","co":"P","c":"recruiting","l":"0:21","dt":"2026-10-01"},{"k":"v08","t":"Listing tour with Angela Bosco","a":"Matien Nazier","co":"Royal LePage Certified","c":"listings","l":"0:51","dt":"2026-10-01"},{"k":"v55","t":"Documentary-style reel","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:37","dt":"2026-09-22"},{"k":"v56","t":"Cash grab","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:07","dt":"2026-09-20"},{"k":"v59","t":"The first-time buyer guide","a":"Zain Merchant","co":"P","c":"brand","l":"0:26","dt":"2026-09-17"},{"k":"v58","t":"Up to $40,000 toward a home in Ontario","a":"Zain Merchant","co":"P","c":"brand","l":"0:44","dt":"2026-09-17"},{"k":"v57","t":"A PSA for first-time home buyers","a":"Zain Merchant","co":"P","c":"brand","l":"0:17","dt":"2026-09-17"},{"k":"v61","t":"Aura, final phase","a":"Faiz Tahir","co":"P","c":"precon","l":"0:37","dt":"2026-09-15"},{"k":"v60","t":"Commercial advert","a":"Faiz Tahir","co":"P","c":"brand","l":"0:38","dt":"2026-09-15"},{"k":"v63","t":"Trunk reel with Ayesha","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:14","dt":"2026-09-04"},{"k":"v62","t":"Why list in Peel in 2026","a":"Zain Merchant","co":"P","c":"brand","l":"1:07","dt":"2026-09-04"},{"k":"v64","t":"Appreciation Day","a":"Salman Syed Laiq","co":"P","c":"events","l":"0:27","dt":"2026-09-03"},{"k":"v65","t":"Intro with Ayesha","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:16","dt":"2026-09-02"},{"k":"v66","t":"Crew walk","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:10","dt":"2026-08-24"},{"k":"v67","t":"Scott & Faiz","a":"Faiz Tahir","co":"P","c":"brand","l":"0:25","dt":"2026-08-17"},{"k":"v69","t":"Faiz’s story, part 2","a":"Faiz Tahir","co":"P","c":"brand","l":"0:20","dt":"2026-08-12"},{"k":"v68","t":"Faiz’s story, part 1","a":"Faiz Tahir","co":"P","c":"brand","l":"0:12","dt":"2026-08-12"},{"k":"v70","t":"New bungalow in Burlington","a":"Syed Naqvi","co":"P","c":"listings","l":"0:21","dt":"2026-08-08"},{"k":"v71","t":"Chris Leader workshop","a":"Faiz Tahir","co":"P","c":"events","l":"0:34","dt":"2026-08-07"},{"k":"v72","t":"Before real estate, part 1","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:47","dt":"2026-07-28"},{"k":"v74","t":"Buying before the end of the year","a":"Zain Merchant","co":"P","c":"brand","l":"1:01","dt":"2026-07-22"},{"k":"v73","t":"98 Ner Israel Drive, Vaughan","a":"Zain Merchant","co":"P","c":"listings","l":"0:57","dt":"2026-07-22"},{"k":"v76","t":"Join Pinnacle","a":"Royal LePage Pinnacle","co":"P","c":"recruiting","l":"0:46","dt":"2026-07-21"},{"k":"v75","t":"G-Wagon pickup","a":"Faiz Tahir","co":"P","c":"brand","l":"1:06","dt":"2026-07-21"},{"k":"v77","t":"A place in Muskoka","a":"Harris Durrani","co":"P","c":"listings","l":"0:58","dt":"2026-07-15"},{"k":"v78","t":"Pre-construction training and Oakville tour","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:07","dt":"2026-07-09"}]/*END*/;
   var TAGS={listings:'Listing reel',precon:'Pre-construction',recruiting:'Recruiting',events:'Event',brand:'Brand reel'};
   var CATS={listings:'Listings',precon:'Pre-construction',recruiting:'Recruiting',events:'Events',brand:'Brand',wide:'Widescreen'};
   var CO={S:'RE/MAX Skyway',P:'Royal LePage Pinnacle'};
-  var R={};
+  var R={},VW={};   // VW: Instagram views by shortcode, filled from the same file as the counter
+  function slug(s){return String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
   LIB.forEach(function(x){var co=CO[x.co]||x.co,who=x.a===co?co:x.a+', '+co;
-    R[x.k]={key:x.k,f:(x.a+' '+x.t).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),t:x.t,agent:x.a,co:x.co,tag:TAGS[x.c]||'',cat:x.c,len:x.l,wide:!!x.w,
+    R[x.k]={as:x.a&&x.a!==co?slug(x.a):'',ig:x.ig||'',key:x.k,f:(x.a+' '+x.t).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),t:x.t,agent:x.a,co:x.co,tag:TAGS[x.c]||'',cat:x.c,len:x.l,wide:!!x.w,
       d:(TAGS[x.c]||'Reel')+' for '+who+'.',src:M+'vault/'+x.k+'.mp4',poster:M+'vault/'+x.k+'.jpg'};});
   function keysOf(test){return LIB.filter(test).map(function(x){return x.k;});}
 
@@ -516,7 +576,7 @@ dialog#player::backdrop{background:#050806}
   function profile(k,o,keys){
     var tall=keys.filter(function(q){return !R[q].wide;}),wide=keys.filter(function(q){return R[q].wide;});
     var cats=Object.keys(TAGS).filter(function(c){return keys.some(function(q){return R[q].cat===c;});});
-    o.strip=tall.slice(0,7);o.tile='vault/'+(o.strip[0]||keys[0]||'');o.count=keys.length;
+    o.strip=(tall.length?tall:keys).slice(0,7);o.tile='vault/'+(o.strip[0]||keys[0]||'');o.count=keys.length;
     o.nav=[[o.home||'Home','']].concat(cats.slice(0,3).map(function(c){return [CATS[c],c];})).concat([['Packages','#packages']]);
     if(keys.length<=10){o.rows=[{title:o.first,sub:keys.length+(keys.length===1?' reel':' reels'),wrap:true,items:keys}];}
     else{o.chips=true;o.rows=[{title:'Latest',sub:'Most recent first',items:keys.slice(0,12)}].concat(cats.map(function(c){
@@ -524,14 +584,20 @@ dialog#player::backdrop{background:#050806}
       if(wide.length)o.rows.push({title:'Widescreen',sub:wide.length+(wide.length===1?' film':' films'),items:wide});}
     P[k]=o;}
   profile('skyway',{label:'RE/MAX Skyway',mark:'RS',logo:'logo-skyway.png',bg:'#000',fg:'#F4EFE4',line:'#2B3832',locked:true,dl:true,note:'PARTNER SIGN-IN',
-    badge:'RE/MAX Skyway · Private',pk:'Your packages',book:'Book your office’s next shoot.',second:'Browse downloads',first:'Made for RE/MAX Skyway',rate:'r'},keysOf(function(x){return x.co==='S';}));
+    badge:'RE/MAX Skyway · Private',pk:'Your packages',book:'Book your office’s next shoot.',second:'Browse downloads',first:'Made for RE/MAX Skyway'},keysOf(function(x){return x.co==='S';}));
   profile('pinnacle',{label:'Royal LePage Pinnacle',mark:'RP',logo:'logo-pinnacle.png',bg:'#000',fg:'#F4EFE4',line:'#2B3832',locked:true,dl:true,note:'PARTNER SIGN-IN',
-    badge:'Royal LePage Pinnacle · Private',pk:'Your packages',book:'Book your office’s next shoot.',second:'Browse downloads',first:'Made for Royal LePage Pinnacle',rate:'p'},keysOf(function(x){return x.co==='P';}));
+    badge:'Royal LePage Pinnacle · Private',pk:'Your packages',book:'Book your office’s next shoot.',second:'Browse downloads',first:'Made for Royal LePage Pinnacle'},keysOf(function(x){return x.co==='P';}));
   profile('solo',{label:'Solo agents',mark:'SA',bg:'#F4EFE4',fg:'#18201C',line:'#F4EFE4',locked:false,dl:false,note:'OPEN TO ALL',
     badge:'Solo agents',pk:'Packages',book:'Your listing, next on the wall.',second:'Book a shoot',first:'Made for independent agents'},keysOf(function(x){return x.co!=='S'&&x.co!=='P';}));
   profile('all',{label:'All videos',mark:'▶',bg:'#141C18',fg:'#F4EFE4',line:'#3B4A43',locked:false,dl:false,note:'FULL LIBRARY',home:'All videos',
     badge:'All videos',pk:'Packages',book:'Your listing, next on the wall.',second:'Book a shoot',first:'Everything we have made'},keysOf(function(){return true;}));
   var ORDER=['skyway','pinnacle','solo','all'];
+  /* a page for each agent: reelestatemedia.com/#zain-merchant. Open to everyone, like the reels themselves. */
+  var AG={},TAKEN={profiles:1,book:1,packages:1,library:1,about:1};
+  LIB.forEach(function(x){var r=R[x.k];if(!r.as||P[r.as]||TAKEN[r.as])return;(AG[r.as]=AG[r.as]||{name:x.a,co:CO[x.co]||x.co,keys:[]}).keys.push(x.k);});
+  Object.keys(AG).forEach(function(s){var a=AG[s],ini=a.name.split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();
+    profile(s,{label:a.name,mark:ini,bg:'#141C18',fg:'#F4EFE4',line:'#3B4A43',locked:false,dl:false,agent:true,home:'All reels',
+      badge:a.name+' · '+a.co,pk:'Packages',book:'Want reels like these?',second:'Copy link to this page',first:'Reels with '+a.name},a.keys);});
   var unlocked={};
   var state={profile:null,active:3,cat:'',q:''};
   var OFFS=[-36,30,-10,0,44,-24,18], HTS=[270,300,250,285,290,260,280];
@@ -562,9 +628,13 @@ dialog#player::backdrop{background:#050806}
   function card(k,p){var r=R[k];
     return '<div class="card'+(r.wide?' wide':'')+'"><button type="button" class="thumb" data-play="'+k+'" aria-label="Play: '+esc(r.t)+'">'+
       '<img loading="lazy" decoding="async" alt="" src="'+r.poster+'"><span class="pl">'+PLAY+'</span><span class="len">'+r.len+'</span></button>'+
-      '<div class="meta"><span class="t">'+esc(r.t)+'</span><span class="g">'+esc(r.agent?r.agent+(r.tag?' \u00B7 '+r.tag:''):r.tag)+'</span>'+
-      (p.dl?'<a class="dl" href="'+r.src+'" download="'+r.f+'.mp4"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"></path></svg>Download</a>':'')+
+      '<div class="meta"><span class="t">'+esc(r.t)+'</span><span class="g">'+(r.agent?(r.as&&P[r.as]&&r.as!==state.profile?'<a href="#'+r.as+'">'+esc(r.agent)+'</a>':esc(r.agent))+esc(r.tag?' \u00B7 '+r.tag:''):esc(r.tag))+'</span>'+
+      (r.ig&&VW[r.ig]?'<a class="vw" href="https://www.instagram.com/reel/'+r.ig+'/" target="_blank" rel="noopener">'+vshort(VW[r.ig])+' views on Instagram</a>':'')+
+      (p.dl?'<a class="dl" data-dl="'+k+'" href="'+dlink(k,p)+'" download="'+r.f+'.mp4" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"></path></svg>'+(p.dls&&p.dls[k]?'Download original':'Download')+'</a>':'')+
       '</div></div>';}
+  /* signed-in brokerages get the full-quality original; everyone else has no download at all */
+  function dlink(k,p){var id=p.dls&&p.dls[k];return id?'https://drive.usercontent.google.com/download?id='+encodeURIComponent(id)+'&export=download&confirm=t':R[k].src;}
+  function vshort(n){return n>=1e6?(n/1e6).toFixed(1).replace('.0','')+'M':n>=1e4?Math.round(n/1e3)+'K':n>=1e3?(n/1e3).toFixed(1).replace('.0','')+'K':String(n);}
   var list=[];   // what the player steps through
   function rows(){var p=P[state.profile],h='';
     if(state.cat||state.q){
@@ -585,37 +655,39 @@ dialog#player::backdrop{background:#050806}
     $('ntag').textContent=(r.tag?r.tag+' \u00B7 ':'')+'0'+(state.active+1)+' / 0'+p.strip.length;
     $('ntitle').textContent=r.t; $('nmeta').textContent=r.d;}
   
-  /* ---------- the price list. Three rate cards: p = Royal LePage Pinnacle, r = RE/MAX Skyway, o = solo agents and everyone else.
-     A row with no price for a rate card is not offered there (the Project Tour Reel is a brokerage rate). ---------- */
+  /* ---------- the price list. Only our standard rates are written in this page. A partner brokerage's own rate card is kept
+     in Supabase and handed to the page after that office signs in (p.rates: service name -> prices). A service with no
+     standard price is a brokerage rate and is not offered to everyone else. ---------- */
   var R3=['1 reel','5 reels','10 reels'];
   var PRICES=[
     ['Social reels',[
-      ['Dynamic Shoot · Tier 1','On location, with gimbal and cinematic capture. Up to 30 seconds per reel.',{p:[150,575,1000],r:[150,575,1000],o:[200,850,1500]},'dynamic-shoot'],
-      ['Podcast / Sitdown Shoot · Tier 2','Podcast-style or sitdown reels recorded in our studio. Up to 30 seconds per reel.',{p:[95,350,650],r:[115,500,900],o:[150,675,1150]},'podcast-teleprompter'],
-      ['You Shoot, We Edit','Send us your raw footage and we edit polished reels.',{p:[100,375,650],r:[80,375,650],o:[100,375,650]},'you-shoot-we-edit'],
-      ['Project Tour Reel','A 30 second project reel, filmed at the builder’s sales office. A brokerage rate.',{p:[80],r:[100]},'project-tour-reel'],
-      ['Professional Headshots','An individual session of up to 30 minutes, with up to 10 images.',{p:[100],r:[125],o:[150]},'30min']]],
+      ['Dynamic Shoot · Tier 1','On location, with gimbal and cinematic capture. Up to 30 seconds per reel.',[200,850,1500],'dynamic-shoot'],
+      ['Podcast / Sitdown Shoot · Tier 2','Podcast-style or sitdown reels recorded in our studio. Up to 30 seconds per reel.',[150,675,1150],'podcast-teleprompter'],
+      ['You Shoot, We Edit','Send us your raw footage and we edit polished reels.',[100,375,650],'you-shoot-we-edit'],
+      ['Project Tour Reel','A 30 second project reel, filmed at the builder’s sales office. A brokerage rate.',null,'project-tour-reel'],
+      ['Professional Headshots','An individual session of up to 30 minutes, with up to 10 images.',[150],'30min']]],
     ['Listings',[
-      ['Listing Photos','An HDR photo set of the home.',{p:[200],r:[225],o:[250]},'essential-listing-photos-20-hdr-clone'],
-      ['Listing Video','A video of the home, edited for the listing and for social.',{p:[200],r:[225],o:[250]},'listing-video'],
-      ['Professional Listing Video + Photo Package','The photo set and the listing video, booked together.',{p:[300],r:[400],o:[450]},'professional-listing-video-photo-package'],
-      ['Luxury Property Film Package','A property film with drone shots, a Tier 1 Instagram reel and an MLS link.',{p:[650],r:[850],o:[1000]},'luxury-property-film-package']]],
+      ['Listing Photos','An HDR photo set of the home.',[250],'essential-listing-photos-20-hdr-clone'],
+      ['Listing Video','A video of the home, edited for the listing and for social.',[250],'listing-video'],
+      ['Professional Listing Video + Photo Package','The photo set and the listing video, booked together.',[450],'professional-listing-video-photo-package'],
+      ['Luxury Property Film Package','A property film with drone shots, a Tier 1 Instagram reel and an MLS link.',[1000],'luxury-property-film-package']]],
     ['Events',[
-      ['Event Recap Package · Photo Coverage','Two hours on site. All high-resolution images, edited.',{p:[350],r:[350],o:[400]},'event-recap-package-photo-coverage-2-hours'],
-      ['Event Recap Package · Video Coverage','Two hours on site. Video of your event.',{p:[350],r:[350],o:[400]},'event-recap-package-video-coverage-2-hours'],
-      ['Event Recap Package · Photo and Video','Two hours on site. Both, in one booking.',{p:[600],r:[600],o:[700]},'event-recap']]]
+      ['Event Recap Package · Photo Coverage','Two hours on site. All high-resolution images, edited.',[400],'event-recap-package-photo-coverage-2-hours'],
+      ['Event Recap Package · Video Coverage','Two hours on site. Video of your event.',[400],'event-recap-package-video-coverage-2-hours'],
+      ['Event Recap Package · Photo and Video','Two hours on site. Both, in one booking.',[700],'event-recap']]]
   ];
   function money(n){return '$'+String(n).replace(/\B(?=(\d{3})+$)/g,',');}
-  function prices(t){
-    $('prices').innerHTML=PRICES.map(function(g){var rows=g[1].filter(function(r){return r[2][t];});
-      return rows.length?'<div class="pgrp"><h3>'+g[0]+'</h3>'+rows.map(function(r){var v=r[2][t];
+  function prices(p){var own=p.rates,val=function(r){var v=own?own[r[0]]:r[2];return v&&v.length?v:null;};
+    $('prices').innerHTML=PRICES.map(function(g){var rows=g[1].filter(val);
+      return rows.length?'<div class="pgrp"><h3>'+g[0]+'</h3>'+rows.map(function(r){var v=val(r);
         return '<div class="prow"><div class="nm"><b>'+esc(r[0])+'</b><span>'+esc(r[1])+'</span></div><div class="ps">'+
           v.map(function(x,i){return '<div><small>'+(v.length>1?R3[i]:'&nbsp;')+'</small><b>'+money(x)+'</b></div>';}).join('')+
           '</div><a class="bk1" href="'+CAL+'/'+r[3]+'" target="_blank" rel="noopener" aria-label="Book '+esc(r[0])+' on Calendly">Book</a></div>';}).join('')+'</div>':'';}).join('');
-    var d=PRICES[0][1][0][2][t],l=PRICES[1][1];
+    var d=val(PRICES[0][1][0])||PRICES[0][1][0][2],l=PRICES[1][1],a=val(l[2])||l[2][2],b=val(l[3])||l[3][2];
     $('pk1').innerHTML=money(d[0])+' <small>per reel, 5 for '+money(d[1])+', 10 for '+money(d[2])+'</small>';
-    $('pk2').firstChild.nodeValue=money(l[2][2][t][0])+' ';
-    $('pk3').firstChild.nodeValue=money(l[3][2][t][0])+' ';}
+    $('pk2').firstChild.nodeValue=money(a[0])+' ';
+    $('pk3').firstChild.nodeValue=money(b[0])+' ';
+    $('pnote').hidden=!(sb&&p.locked&&!own);}
 
   function strip(){var p=P[state.profile];
     $('strip').innerHTML=p.strip.map(function(k,i){var r=R[k];
@@ -633,7 +705,7 @@ dialog#player::backdrop{background:#050806}
     document.querySelectorAll('[data-mark]').forEach(function(el){paintMark(el,p);});
     document.querySelectorAll('[data-label]').forEach(function(el){el.textContent=p.label;});
     $('badge').textContent=p.badge; $('mbadge').textContent=p.badge.toUpperCase();
-    prices(p.rate||'o');
+    prices(p);
     $('second').textContent=p.second; $('pkeyebrow').textContent=p.pk; $('booktitle').textContent=p.book;
     var navh=function(base){return p.nav.map(function(n,i){var t=n[1],c=(base+(i===0?' on':'')).trim();return '<button type="button" '+(t.charAt(0)==='#'?'data-scroll="'+t.slice(1)+'"':'data-cat="'+t+'"')+(c?' class="'+c+'"':'')+'>'+esc(n[0])+'</button>';}).join('');};
     $('nav').innerHTML=navh(''); $('mnav').innerHTML=navh('chip');
@@ -647,15 +719,18 @@ dialog#player::backdrop{background:#050806}
     if(id!=='hub'){$('strip').querySelectorAll('video').forEach(function(v){v.pause();});}
     window.scrollTo(0,0);if(id==='picker'&&typeof vroll==='function')vroll();}
   var after=null;
+  var seen='';
   function route(){var k=(location.hash||'').replace('#','');
+    if(dlg&&dlg.open)shut();
+    document.title=(P[k]?P[k].label+' | ':'')+'Reel Estate Media'+(P[k]?'':' | Real estate reels, listing video and photos in the GTA');
     if(P[k]){var p=P[k];
-      if(p.locked&&!unlocked[k]){paintLogo($('lmark'),p);$('llabel').textContent=p.label;$('lblur').src=M+p.tile+'.jpg';$('signform').setAttribute('data-k',k);show('login');return;}
+      if(p.locked&&!unlocked[k]){paintLogo($('lmark'),p);$('llabel').textContent=p.label;$('lblur').src=M+p.tile+'.jpg';$('signform').setAttribute('data-k',k);show('login');if(seen!=='login:'+k){seen='login:'+k;track('view',seen);}return;}
       if(sb&&p.locked&&!p.own&&!p.loading){p.loading=true;var fin=function(){p.loading=false;p.own=true;route();};library(k).then(fin,fin);return;}
-      show('hub');hub(k);
+      show('hub');hub(k);if(seen!==k){seen=k;track('view',k);}
       if(after){var a=after;after=null;setTimeout(function(){go(a);},60);}
       return;}
-    if(k==='book'||k==='packages'||k==='library'){if(state.profile&&!$('hub').hidden){return;} after=k;location.hash='solo';return;}
-    show('picker');}
+    if(k==='book'||k==='packages'||k==='library'||k==='about'){if(state.profile&&!$('hub').hidden){return;} after=k;location.hash='solo';return;}
+    show('picker');if(seen!=='picker'){seen='picker';track('view','picker');}}
   function go(id){var el=$(id);if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});}
   window.addEventListener('hashchange',route);
   /* ---------- partner sign-in (Supabase) ---------- */
@@ -666,7 +741,11 @@ dialog#player::backdrop{background:#050806}
       return sb.from('rem_library_members').select('library').eq('user_id',id).then(function(r){
         var libs=(r.data||[]).map(function(x){return x.library;}).filter(function(l){return P[l]&&P[l].locked;});
         unlocked={};libs.forEach(function(l){unlocked[l]=true;});$('signout').hidden=false;return libs;});});}
-  function library(k){   // the library's own reels, from its private folder; signed links last an hour
+  function library(k){return Promise.all([reels(k),secrets(k)]);}
+  function secrets(k){   // this office's rate card and the original files behind its reels; the row rules only release them to that office
+    return sb.from('rem_library_private').select('rates,downloads').eq('library',k).maybeSingle().then(function(r){var d=r.data;if(!d)return;
+      if(d.rates&&Object.keys(d.rates).length)P[k].rates=d.rates;if(d.downloads)P[k].dls=d.downloads;});}
+  function reels(k){   // the library's own reels, from its private folder; signed links last an hour
     return sb.from('rem_library_reels').select('*').eq('library',k).order('sort').order('created_at',{ascending:false}).then(function(r){
       var rows=r.data||[];if(!rows.length)return;
       var paths=[];rows.forEach(function(x){paths.push(x.video_path,x.poster_path);});
@@ -693,7 +772,7 @@ dialog#player::backdrop{background:#050806}
       if(r.error){busy(false);lerr(/fetch|network/i.test(r.error.message||'')?down:'That email or password is not right.');return;}
       $('lpass').value='';
       return members().then(function(l){busy(false);
-        if(unlocked[k]){enter(k);return;}
+        if(unlocked[k]){track('signin',k);enter(k);return;}
         if(l.length){enter(l[0]);return;}
         lerr('This account is not set up for a library yet. Ask your office admin, or contact us.');$('signout').hidden=true;return sb.auth.signOut();});
     }).catch(function(){busy(false);lerr(down);});});
@@ -701,7 +780,7 @@ dialog#player::backdrop{background:#050806}
     if(!sb){n.hidden=false;return;}
     var em=$('lemail').value.trim();if(em.indexOf('@')<1){lerr('Type your email above first, then press Forgot password.');return;}
     sb.auth.resetPasswordForEmail(em,{redirectTo:location.origin+location.pathname}).then(function(){n.textContent='If that email has an account, a reset link is on its way.';n.hidden=false;});});
-  $('signout').addEventListener('click',function(){var done=function(){unlocked={};['skyway','pinnacle'].forEach(function(q){P[q].own=false;});$('signout').hidden=true;location.hash='profiles';route();};
+  $('signout').addEventListener('click',function(){var done=function(){unlocked={};['skyway','pinnacle'].forEach(function(q){P[q].own=false;P[q].rates=null;P[q].dls=null;});$('signout').hidden=true;location.hash='profiles';route();};
     if(sb)sb.auth.signOut().then(done,done);else done();});
 
   /* ---------- clicks ---------- */
@@ -719,7 +798,23 @@ dialog#player::backdrop{background:#050806}
   $('strip').addEventListener('mouseover',function(e){var b=e.target.closest('.reel');if(b&&window.matchMedia('(hover:hover)').matches)pick(+b.getAttribute('data-i'));});
   $('strip').addEventListener('focusin',function(e){var b=e.target.closest('.reel');if(b)pick(+b.getAttribute('data-i'));});
   $('watch').addEventListener('click',function(){var s=P[state.profile].strip;openPlayer(s[state.active],s);});
-  $('second').addEventListener('click',function(){go(P[state.profile].dl?'library':'book');});
+  $('second').addEventListener('click',function(){var p=P[state.profile],b=this;
+    if(!p.agent){go(p.dl?'library':'book');return;}
+    var u=location.origin+location.pathname+'#'+state.profile,ok=function(){b.textContent='Link copied';setTimeout(function(){b.textContent=p.second;},1800);};
+    var old=function(){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');ok();}catch(e){}t.remove();};
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(u).then(ok,old);else old();});
+  /* ---------- visitor counts: which section was opened, which reel was played, which Book button was pressed.
+     No names, no cookies, nothing about the person: one anonymous row per action, write-only from the page. ---------- */
+  var SID=Math.random().toString(36).slice(2,12),LIVE=/(^|\.)reelestatemedia\.com$/.test(location.hostname)&&navigator.doNotTrack!=='1';
+  var REF=(function(){try{var h=new URL(document.referrer).hostname;return h===location.hostname?'':h.slice(0,80);}catch(e){return '';}})();
+  function track(ev,sec,reel){if(!SUPA_KEY||!LIVE||!window.fetch)return;
+    try{fetch(SUPA_URL+'/rest/v1/rem_events',{method:'POST',keepalive:true,headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify({ev:ev,sec:String(sec||'').slice(0,60)||null,reel:String(reel||'').slice(0,40)||null,ref:REF||null,sid:SID,mob:window.innerWidth<700})}).catch(function(){});}catch(e){}}
+  document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;var h=a.getAttribute('href')||'';
+    if(h.indexOf(CAL)===0)track('book',state.profile||'picker',h.slice(CAL.length+1)||'calendar');
+    else if(a.hasAttribute('data-dl'))track('download',state.profile,a.getAttribute('data-dl'));
+    else if(h.indexOf('instagram.com')>0)track('instagram',state.profile||'picker');
+    else if(h.indexOf('tel:')===0||h.indexOf('mailto:')===0)track('contact',state.profile||'picker',h.split(':')[0]);},true);
   $('q').addEventListener('input',function(){state.q=this.value.trim().toLowerCase();state.cat='';rows();});
   $('q').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();go('library');}});
 
@@ -734,8 +829,10 @@ dialog#player::backdrop{background:#050806}
   function load(){var r=R[plist[pidx]],p=P[state.profile];
     $('pw').classList.toggle('wide',!!r.wide);
     pv.poster=r.poster;pv.src=r.src;
-    $('ptag').textContent=[r.tag,r.len].filter(Boolean).join(' · ');$('ptitle').textContent=r.t;$('pmeta').textContent=r.d;
-    var d=$('pdl');d.hidden=!p.dl;if(p.dl){d.href=r.src;d.setAttribute('download',r.f+'.mp4');}
+    $('ptag').textContent=[r.tag,r.len].filter(Boolean).join(' · ');$('ptitle').textContent=r.t;
+    $('pmeta').innerHTML=esc(r.d)+(r.as&&P[r.as]&&r.as!==state.profile?' <a href="#'+r.as+'">See every reel with '+esc(r.agent)+'</a>':'');
+    var d=$('pdl');d.hidden=!p.dl;if(p.dl){d.href=dlink(r.key,p);d.setAttribute('download',r.f+'.mp4');d.setAttribute('data-dl',r.key);}
+    track('play',state.profile,r.key);
     var multi=plist.length>1;$('pprev').hidden=!multi;$('pnext').hidden=!multi;
     var pr=pv.play();if(pr&&pr.catch)pr.catch(function(){});}
   function openPlayer(k,l){plist=(l&&l.indexOf(k)>=0)?l.slice():[k];pidx=plist.indexOf(k);
@@ -783,7 +880,8 @@ dialog#player::backdrop{background:#050806}
     if(!window.fetch){vsettled=true;return;}
     fetch(HUB+'proof.json',{cache:'no-cache'}).then(j).then(function(now){
       if(!now||!now.reels)return;var RR=now.reels,t=0,n=0;
-      Object.keys(RR).forEach(function(k){var v=(RR[k]&&RR[k].views)||0;if(v>0){t+=v;n++;}});
+      Object.keys(RR).forEach(function(k){var v=(RR[k]&&RR[k].views)||0;if(v>0){t+=v;n++;VW[k]=v;}});
+      if(state.profile&&!$('hub').hidden&&LIB.some(function(x){return x.ig;}))rows();
       if(t>0&&!vrolled){vtarget=t;vb.textContent=vfmt(t);document.querySelector('#views [data-count]').textContent=n;}
       vsettled=true;vroll();
       // "+N in the last 24 hours": today's reading against the one from about a day earlier, from the Hub's history on GitHub
