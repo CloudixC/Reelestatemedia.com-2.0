@@ -62,7 +62,7 @@
     return out.filter(function(f){return !heldIds[f.id];});}
 
   window.remVaultSync=async function(){
-    var res={ok:false,backup:null,finals:0,fresh:0,held:0,unpaid:0,unpaidOnSite:[],errors:[]};
+    var res={ok:false,backup:null,finals:0,fresh:0,held:0,unpaid:0,unpaidOnSite:[],renames:0,errors:[]};
     var raw=localStorage.getItem('rem_pipeline_v1');if(!raw){res.errors.push('No Command Centre data in this browser.');return res;}
     var db=JSON.parse(raw),APPR={};try{APPR=JSON.parse(localStorage.getItem('vault_appr')||'{}')||{};}catch(e){}
     var bk=localStorage.getItem('rem_sbk_v1');if(!bk){res.errors.push('No backup key in this browser.');return res;}
@@ -75,7 +75,17 @@
       if(res.unpaidOnSite.length)res.errors.unshift('ON THE SITE but held until paid: '+res.unpaidOnSite.join(', '));
       if(heldFiles.length)res.errors.unshift('held until paid, not published: '+heldFiles.length+' file(s), '+heldFiles.slice(0,3).map(function(x){return x.agent;}).filter(function(x,i,a){return a.indexOf(x)===i;}).join(', '));
       var fresh=[];for(const f of finals){var h=await sha(f.id);if(man.on[h])continue;if(man.hold&&man.hold[h]){res.held++;continue;}f.h=h;fresh.push(f);}
-      res.fresh=fresh.length;publish={at:new Date().toISOString(),finals:finals.length,fresh:fresh,unpaid:heldFiles,errors:res.errors.slice(0,40)};
+      /* a client renamed in the Command Centre: list the reels on the site that still carry the old name */
+      var renames=[];
+      try{var page=await fetch(SITE+'index.html?'+Date.now(),{cache:'no-store'}).then(function(r){return r.text();});
+        var cur={};JSON.parse(page.split('/*LIB*/')[1].split('/*END*/')[0]).forEach(function(x){cur[x.k]=x.a;});
+        for(const f of finals.concat(heldFiles)){var fh=f.h||await sha(f.id),rk=man.on[fh];if(!rk||cur[rk]===undefined)continue;
+          var nm=/^Pinnacle \(/.test(f.agent||'')?'Royal LePage Pinnacle':String(f.agent||'').trim();
+          if(nm&&cur[rk]!==nm&&!renames.some(function(x){return x.key===rk;}))renames.push({key:rk,from:cur[rk],to:nm});}
+      }catch(e){res.errors.push('name check: '+String(e.message||e).slice(0,60));}
+      res.renames=renames.length;
+      if(renames.length)res.errors.unshift('renamed: '+renames.map(function(x){return x.from+' to '+x.to;}).filter(function(x,i,a){return a.indexOf(x)===i;}).slice(0,3).join('; '));
+      res.fresh=fresh.length;publish={at:new Date().toISOString(),finals:finals.length,fresh:fresh,renames:renames,unpaid:heldFiles,errors:res.errors.slice(0,40)};
     }catch(e){res.errors.push('publish list: '+String(e.message||e).slice(0,100));}
     var ls={};Object.keys(localStorage).forEach(function(k){if(k==='rem_sbk_v1'||k==='rem_pipeline_v1'||k==='beta:rem_pipeline_v1')return;if(/^(beta:)?(rem_|vault_)/.test(k))ls[k]=localStorage.getItem(k);});
     var beta=null;try{beta=JSON.parse(localStorage.getItem('beta:rem_pipeline_v1')||'null');}catch(e){}

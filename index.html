@@ -766,8 +766,9 @@ footer .f a.fc:hover{color:var(--cream)}
     if(id!=='hub'){$('strip').querySelectorAll('video').forEach(function(v){v.pause();});}
     window.scrollTo(0,0);if(id==='picker'&&typeof vroll==='function')vroll();}
   var after=null;
-  var seen='';
+  var seen='',AKA=/*AKA*/{}/*END-AKA*/;   // old agent page links after a rename: old name -> new name
   function route(){var k=(location.hash||'').replace('#','');
+    if(!P[k]&&AKA[k]&&P[AKA[k]]){location.replace('#'+AKA[k]);return;}
     if(dlg&&dlg.open)shut();
     document.title=(P[k]?P[k].label+' | ':'')+'Reel Estate Media'+(P[k]?'':' | Real estate reels, listing video and photos in the GTA');
     if(P[k]){var p=P[k];
