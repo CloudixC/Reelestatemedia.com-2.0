@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reel Estate Media</title>
+<meta name="description" content="Reel Estate Media. Listing reels, brand films and private reel libraries for brokerages and agents across the GTA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&amp;family=Inter:wght@400;500;600&amp;family=Montserrat:wght@800&amp;display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a streaming-style profile picker opens onto a floating dark panel over a wall of our own reels; cream bands carry packages. */
+:root{
+  color-scheme:dark;
+  --ink:#0A0F0C; --panel:#0D1411; --well:#111A16; --line:#23302A; --line2:#3B4A43;
+  --cream:#F4EFE4; --paper:#FFFDF8; --sage:#A9C4B6; --sage2:#7FA393; --mute:#A3ABA6; --soft:#D8D2C5;
+  --forest:#2F3F37; --ink2:#18201C; --moss:#4E6B5E;
+  --display:'Playfair Display',Georgia,'Times New Roman',serif;
+  --body:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --brand:Montserrat,Inter,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--cream);font-family:var(--body);font-size:16px;line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,video{max-width:100%;display:block}
+a{color:var(--cream);text-decoration:none}
+a:hover{color:var(--sage)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--sage);outline-offset:3px}
+h1,h2,h3,p{margin:0}
+h1,h2{text-wrap:balance}
+.serif{font-family:var(--display);font-weight:500}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase}
+[hidden]{display:none!important}
+
+.logo{display:inline-flex;align-items:center;gap:10px;color:var(--cream)}
+.logo i{display:block;width:44px;height:21px;background:var(--sage);-webkit-mask:url(media/logo-mark.png) center/contain no-repeat;mask:url(media/logo-mark.png) center/contain no-repeat}
+.logo b{font-family:var(--brand);font-weight:800;font-size:16px;letter-spacing:.05em;white-space:nowrap}
+
+.btn{border:0;cursor:pointer;font:600 15px var(--body);border-radius:999px;padding:14px 26px;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;transition:transform .2s,background .2s,color .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn.cream{background:var(--cream);color:var(--ink)}
+.btn.cream:hover{background:#fff;color:var(--ink)}
+.btn.ghost{background:transparent;border:1px solid rgba(244,239,228,.4);color:var(--cream)}
+.btn.ghost:hover{border-color:var(--cream);color:var(--cream)}
+.btn.dark{background:var(--ink);color:var(--cream)}
+.navb{border:0;background:transparent;color:var(--soft);font:500 14px var(--body);cursor:pointer;padding:8px 0;min-height:44px;display:inline-flex;align-items:center;gap:8px}
+.navb:hover{color:var(--cream)}
+
+/* wall of stills */
+.wall{position:absolute;display:grid;gap:8px;pointer-events:none}
+.wall img{width:100%;aspect-ratio:9/16;object-fit:cover;background:#1B2621}
+
+/* ---------- picker ---------- */
+#picker{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;overflow:hidden}
+#picker .wall{inset:0;grid-template-columns:repeat(12,minmax(0,1fr));opacity:.16}
+#picker .veil{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(10,15,12,.5) 0%,var(--ink) 75%)}
+#picker header{position:relative;padding:28px 48px}
+.pick{position:relative;flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px 20px 96px;text-align:center}
+.pick h1{font-size:clamp(38px,5.2vw,64px);line-height:1.05}
+.pick .lead{color:var(--mute);margin-bottom:34px}
+.tiles{display:flex;gap:44px;flex-wrap:wrap;justify-content:center}
+.tile{border:0;padding:0;cursor:pointer;background:transparent;display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--mute);font:500 16px var(--body)}
+.tile .sq{position:relative;width:190px;height:190px;border-radius:18px;display:flex;align-items:center;justify-content:center;overflow:hidden;font-family:var(--display);font-size:58px;letter-spacing:.02em;transition:transform .25s,outline-color .25s;outline:3px solid transparent;outline-offset:4px;border:1px solid transparent}
+.tile .sq img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.34;filter:grayscale(1)}
+.tile .sq img.lg{position:relative;inset:auto;width:84%;height:auto;max-height:84%;object-fit:contain;opacity:1;filter:none}
+.tile .sq>span{position:relative}
+.tile .sq>.lock{position:absolute}
+.tile:hover{color:var(--cream)}
+.tile:hover .sq{transform:scale(1.06);outline-color:var(--cream)}
+.tile:focus-visible{outline:0}
+.tile:focus-visible .sq{outline-color:var(--sage)}
+.tile small{font-size:12px;letter-spacing:.1em;color:var(--sage2);margin-top:-4px}
+.lock{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:15px;background:rgba(10,15,12,.6);color:var(--cream);display:flex;align-items:center;justify-content:center}
+.pick .cta{margin-top:52px;font-size:14px;letter-spacing:.14em;color:var(--soft);border:1px solid var(--line2);padding:13px 22px;text-transform:uppercase}
+.pick .cta:hover{border-color:var(--cream);color:var(--cream)}
+
+/* the Instagram view total, same readings as The Content Hub */
+.views{margin-top:44px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.vrow{display:flex;align-items:flex-end;gap:.26em;white-space:nowrap;font-family:var(--display);font-weight:500;font-size:clamp(34px,4.6vw,54px);line-height:1}
+.vrow b{font-weight:500;color:var(--sage);font-variant-numeric:tabular-nums lining-nums}
+.vrow span{color:var(--cream)}
+.views small{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.views small i{font-style:normal}
+.vgain{font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--sage2)}
+.igb{margin-top:14px;display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:11px 20px;border-radius:999px;border:1px solid rgba(244,239,228,.4);color:var(--cream);font-size:14px;font-weight:600}
+.igb:hover{background:var(--cream);border-color:var(--cream);color:var(--ink)}
+.fig{display:inline-flex;align-items:center;gap:8px;color:var(--sage);min-height:28px}
+.fig:hover{color:var(--cream)}
+.od{display:inline-block;height:1em;overflow:hidden;vertical-align:top}
+.odr{display:block;transition:transform 1.4s cubic-bezier(.16,1,.3,1);will-change:transform}
+.odr span{display:block;height:1em;line-height:1}
+.odc{display:inline-block;vertical-align:top;line-height:1}
+/* ---------- sign-in ---------- */
+#login{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;overflow:hidden}
+#login .blur{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(40px) brightness(.35);transform:scale(1.2)}
+#login header{position:relative;padding:20px 48px}
+.signwrap{position:relative;flex:1 1 auto;display:flex;align-items:center;justify-content:center;padding:16px 16px 96px}
+.sign{width:min(440px,100%);background:rgba(13,20,17,.92);border:1px solid var(--line);border-radius:22px;padding:40px;display:flex;flex-direction:column;gap:20px;box-shadow:0 40px 100px rgba(0,0,0,.5)}
+.sign .who{display:flex;align-items:center;gap:14px}
+.mark{flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-family:var(--display);border:1px solid transparent}
+.sign .mark{width:56px;height:56px;border-radius:12px;font-size:20px;overflow:hidden}
+.sign .mark.lg{width:112px;height:64px;padding:6px 8px}
+.sign .mark.lg img{width:100%;height:100%;object-fit:contain}
+.sign h1{font-size:30px;line-height:1.15}
+.field{display:flex;flex-direction:column;gap:8px;font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--mute);text-transform:uppercase}
+.field input{height:50px;border:1px solid var(--line2);border-radius:10px;background:#0F1613;color:var(--cream);font:400 16px var(--body);padding:0 14px;width:100%;min-width:0}
+.field input::placeholder{color:#6F7A74}
+.field input:focus{outline:2px solid var(--sage);outline-offset:1px}
+.sign .foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--mute)}
+.note{font-size:13px;color:var(--sage);background:rgba(169,196,182,.08);border:1px solid rgba(169,196,182,.25);border-radius:10px;padding:10px 12px;text-transform:none;letter-spacing:0;font-weight:400}
+
+/* ---------- hub hero ---------- */
+.show{position:relative;padding:100px 40px 100px;overflow:hidden}
+.show .wall{inset:-60px;grid-template-columns:repeat(10,minmax(0,1fr));gap:10px;opacity:.45;transform:rotate(-4deg) scale(1.1)}
+.show .wall img{border-radius:6px;filter:contrast(1.1)}
+.show .veil{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(10,15,12,.35) 0%,rgba(10,15,12,.92) 80%)}
+.stage{position:relative;max-width:1160px;margin:0 auto;height:720px;border-radius:24px;background:rgba(13,20,17,.96);border:1px solid var(--line);box-shadow:0 50px 120px rgba(0,0,0,.6);display:flex;overflow:hidden}
+.side{flex:0 0 214px;border-right:1px solid var(--line);padding:26px 20px 26px 34px;display:flex;flex-direction:column;min-width:0}
+.search{display:flex;align-items:center;gap:10px;color:var(--soft)}
+.search input{flex:1 1 auto;min-width:0;width:100%;height:40px;background:transparent;border:0;border-bottom:1px solid transparent;color:var(--cream);font:400 15px var(--body);padding:0}
+.search input::placeholder{color:var(--soft)}
+.search input:focus{outline:0;border-bottom-color:var(--line2)}
+.side nav{margin:auto 0;display:flex;flex-direction:column;gap:2px}
+.side nav button{border:0;background:transparent;text-align:left;color:var(--mute);font:400 15px var(--body);padding:9px 0;cursor:pointer}
+.side nav button:hover{color:var(--cream)}
+.side nav button.on{color:var(--cream);font-weight:600}
+.switch{text-align:left;gap:10px}
+.switch .mark{width:36px;height:36px;border-radius:8px;font-size:13px}
+.switch span span{display:block}
+.switch .n{font-size:13px;color:var(--cream)}
+.switch .s{font-size:11px;color:var(--mute)}
+.main{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;padding:26px 36px 30px}
+.top{display:flex;align-items:center;gap:12px}
+.top>div{flex:1 1 0;min-width:0}
+.top .badge{font-size:10px;color:var(--sage2)}
+.top .r{display:flex;justify-content:flex-end}
+.top .book{background:var(--cream);color:var(--ink);font-size:13px;font-weight:600;padding:11px 18px;border-radius:999px;white-space:nowrap}
+.top .book:hover{background:#fff;color:var(--ink)}
+.top .swm{display:none}
+.strip{--rw:84px;--aw:232px;--ah:412px;--k:1;flex:1 1 auto;display:flex;align-items:center;justify-content:center;gap:14px;min-height:0}
+.reel{border:0;padding:0;cursor:pointer;border-radius:12px;overflow:hidden;position:relative;flex:0 0 auto;background:#1D2A24;width:var(--rw);height:calc(var(--h)*var(--k));margin-top:calc(var(--mt)*var(--k));opacity:.8;
+  transition:width .55s cubic-bezier(.2,.8,.2,1),height .55s cubic-bezier(.2,.8,.2,1),margin .55s cubic-bezier(.2,.8,.2,1),box-shadow .55s,opacity .4s}
+.reel.on{width:var(--aw);height:var(--ah);margin-top:0;opacity:1;box-shadow:0 30px 60px rgba(0,0,0,.55)}
+.reel img,.reel video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.reel .dim{position:absolute;inset:0;background:rgba(10,15,12,.38);transition:background .5s}
+.reel.on .dim{background:rgba(10,15,12,0)}
+.reel .tg{position:absolute;left:4px;right:4px;bottom:10px;text-align:center;font:600 9px var(--body);letter-spacing:.12em;color:var(--sage);text-transform:uppercase;transition:opacity .3s}
+.reel.on .tg{opacity:0}
+.reel .go{position:absolute;right:12px;bottom:12px;width:44px;height:44px;border-radius:22px;background:rgba(244,239,228,.92);color:var(--ink);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
+.reel.on .go{opacity:1}
+.now{display:flex;align-items:flex-end;gap:16px;padding-top:8px;flex-wrap:wrap}
+.now .txt{flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.now .eyebrow{color:var(--sage)}
+.now h1{font-size:34px;line-height:1.08}
+.now p{font-size:14px;color:#C9C3B6}
+.now .btn{padding:13px 22px;font-size:14px}
+.mnav,.mbadge{display:none}
+
+/* ---------- library ---------- */
+.lib{max-width:1240px;margin:0 auto;padding:72px 40px 40px;display:flex;flex-direction:column;gap:52px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:-20px}
+.chip{border:1px solid var(--line2);background:transparent;color:var(--soft);border-radius:999px;padding:9px 16px;min-height:40px;font:500 13px var(--body);cursor:pointer}
+.chip:hover{border-color:var(--cream);color:var(--cream)}
+.chip.on{background:var(--cream);border-color:var(--cream);color:var(--ink)}
+.rowh{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.rowh h2{font-size:30px}
+.rowh span{font-size:13px;color:var(--mute)}
+.row{display:flex;gap:16px;overflow-x:auto;padding:6px 0 14px;scrollbar-width:thin;scrollbar-color:var(--line2) transparent}
+.row.wrap{flex-wrap:wrap;overflow:visible;row-gap:28px}
+.card{flex:0 0 auto;width:180px;display:flex;flex-direction:column;gap:10px}
+.card.wide{width:420px;max-width:86vw}
+.thumb{border:0;padding:0;cursor:pointer;position:relative;border-radius:12px;overflow:hidden;background:#1B2621;aspect-ratio:9/16;width:100%;transition:transform .3s,box-shadow .3s}
+.card.wide .thumb{aspect-ratio:16/9}
+.thumb img,.thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.thumb .pl{position:absolute;left:10px;bottom:10px;width:36px;height:36px;border-radius:18px;background:rgba(10,15,12,.6);color:var(--cream);display:flex;align-items:center;justify-content:center}
+.thumb .len{position:absolute;right:10px;bottom:14px;font:600 11px var(--body);letter-spacing:.06em;color:var(--cream);text-shadow:0 1px 6px rgba(0,0,0,.8);font-variant-numeric:tabular-nums}
+.thumb:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.5)}
+.card .t{font-size:14px;font-weight:600;line-height:1.3}
+.card .g{font-size:12px;color:var(--mute)}
+.card .dl{font-size:12px;color:var(--sage);margin-top:4px;display:inline-flex;align-items:center;gap:6px;min-height:28px}
+.card .meta{display:flex;flex-direction:column;gap:3px}
+.empty{color:var(--mute);font-size:15px;padding:20px 0}
+
+/* ---------- packages ---------- */
+.cream{background:var(--cream);color:var(--ink2);margin-top:56px}
+.inner{max-width:1240px;margin:0 auto;padding:96px 40px;display:flex;flex-direction:column;gap:44px}
+.pkh{display:flex;flex-wrap:wrap;align-items:flex-end;gap:32px}
+.pkh>div{flex:1 1 480px;display:flex;flex-direction:column;gap:14px}
+.pkh .eyebrow{color:var(--moss)}
+.pkh h2{font-size:clamp(36px,4.4vw,52px);line-height:1.04}
+.pkh>p{flex:0 1 380px;font-size:15px;line-height:1.6;color:#4A524D}
+.pkgs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.pkg{padding:0;border-radius:16px;display:flex;flex-direction:column;background:var(--paper);color:var(--ink2);border:1px solid #D6CEBE;overflow:hidden}
+.pkg .ph{position:relative;aspect-ratio:16/10;background:#1B2621;overflow:hidden}
+.pkg .ph img{width:100%;height:100%;object-fit:cover}
+.pkg .bd{padding:26px 28px 30px;display:flex;flex-direction:column;gap:12px;flex:1 1 auto}
+.pkg .flag{font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--moss)}
+.pkg h3{font-family:var(--display);font-weight:500;font-size:26px;line-height:1.15}
+.pkg ul{list-style:none;margin:0;padding:14px 0 0;border-top:1px solid #D6CEBE;display:flex;flex-direction:column;gap:10px;font-size:15px}
+.pkg a{margin-top:auto;padding-top:14px;font-size:14px;font-weight:600;color:var(--ink2);display:inline-flex;align-items:center;gap:8px}
+.pkg a:hover{color:var(--moss)}
+.pkg.mid{background:var(--panel);color:var(--cream);border-color:#2B3832}
+.pkg.mid .flag{color:var(--sage)}
+.pkg.mid ul{border-top-color:#2B3832}
+.pkg.mid a{color:var(--cream)}
+.pkg.mid a:hover{color:var(--sage)}
+
+.pkg .pr{font-family:var(--display);font-size:40px;line-height:1;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.pkg .pr small{font:500 13px var(--body);color:var(--moss)}
+.pkg.mid .pr small{color:var(--sage)}
+.plist{display:flex;flex-direction:column;gap:36px}
+.pgrp h3{font-family:var(--display);font-weight:500;font-size:28px;margin-bottom:6px}
+.prow{display:flex;align-items:center;gap:18px 28px;flex-wrap:wrap;padding:18px 0;border-top:1px solid #D6CEBE}
+.prow .nm{flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:3px}
+.prow .nm b{font-size:16px;font-weight:600}
+.prow .nm span{font-size:14px;color:#4A524D}
+.prow .ps{display:flex;gap:26px;font-variant-numeric:tabular-nums}
+.prow .ps div{display:flex;flex-direction:column;align-items:flex-end;min-width:64px}
+.prow .ps small{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--moss)}
+.prow .ps b{font-family:var(--display);font-weight:500;font-size:26px;line-height:1.15}
+.prow .bk1{flex:0 0 auto;border:1px solid var(--ink2);color:var(--ink2);border-radius:999px;padding:10px 18px;font-size:13px;font-weight:600;min-height:42px;display:inline-flex;align-items:center}
+.prow .bk1:hover{background:var(--ink2);color:var(--cream)}
+.pfine{font-size:13px;color:#4A524D;max-width:70ch}
+.linkb{border:0;background:transparent;padding:0;color:var(--sage);font:inherit;cursor:pointer;min-height:28px}
+.linkb:hover{color:var(--cream)}
+.note.err{color:#F2B8A8;background:rgba(242,184,168,.08);border-color:rgba(242,184,168,.35)}
+.bkc{flex:1 1 420px;min-width:0;background:var(--well);border:1px solid var(--line);border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:14px}
+.bkc .btn{width:100%}
+.bkc p{font-size:13px;color:var(--mute)}
+/* ---------- book ---------- */
+#book{padding:88px 40px}
+.bk{max-width:1160px;margin:0 auto;display:flex;flex-wrap:wrap;gap:56px;align-items:center}
+.bk .l{flex:1 1 380px;display:flex;flex-direction:column;gap:16px}
+.bk .l .eyebrow{color:var(--sage)}
+.bk h2{font-size:clamp(36px,4.4vw,52px);line-height:1.04}
+.bk .l p{color:var(--mute);max-width:44ch}
+footer{border-top:1px solid var(--line);padding:36px 40px 48px}
+footer .f{max-width:1160px;margin:0 auto;display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between;font-size:13px;color:var(--mute)}
+footer .tag{font-family:var(--brand);font-weight:800;letter-spacing:.12em;font-size:11px;color:var(--sage2)}
+
+/* ---------- player ---------- */
+dialog#player{border:0;padding:0;color:var(--cream);max-width:none;max-height:none;width:100%;height:100%;margin:0}
+dialog#player{background:rgba(5,8,6,.97)}
+dialog#player::backdrop{background:#050806}
+.pw{width:100%;height:100%;display:flex;align-items:center;justify-content:center;gap:40px;padding:32px 72px}
+.pv{position:relative;flex:0 1 auto;height:min(86vh,820px);aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 40px 100px rgba(0,0,0,.6)}
+.pw.wide .pv{height:auto;width:min(62vw,1100px);aspect-ratio:16/9}
+.pv video{width:100%;height:100%;object-fit:contain;background:#000}
+.pi{flex:0 1 340px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.pi .eyebrow{color:var(--sage)}
+.pi h2{font-size:38px;line-height:1.08}
+.pi p{color:#C9C3B6;font-size:15px}
+.pi .acts{display:flex;flex-direction:column;gap:10px;margin-top:10px;align-items:flex-start}
+.pi .pn{display:flex;gap:10px;margin-top:8px}
+.rnd{width:46px;height:46px;border-radius:23px;border:1px solid var(--line2);background:rgba(13,20,17,.8);color:var(--cream);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.rnd:hover{border-color:var(--cream)}
+.px{position:absolute;top:20px;right:20px}
+
+/* ---------- smaller screens ---------- */
+@media(max-width:1120px){
+  .strip{--rw:58px;--aw:204px;--ah:363px;--k:.86;gap:10px}
+  .side{flex-basis:186px;padding-left:24px}
+  .main{padding:24px 24px 26px}
+}
+@media(max-width:860px){
+  #picker header,#login header{padding:18px 20px}
+  #picker .wall{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 28px}
+  .tile .sq{width:min(132px,36vw);height:min(132px,36vw);font-size:42px;border-radius:16px}
+  .tile{font-size:14px}
+  .pick{justify-content:flex-start;padding-top:8vh}
+  .views{margin-top:32px}
+  .views small{letter-spacing:.12em;max-width:30ch;line-height:1.5}
+  .sign{padding:28px 22px}
+  .show{padding:12px}
+  .show .wall{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;inset:-30px}
+  .stage{height:auto;min-height:calc(100svh - 24px);border-radius:20px;flex-direction:column}
+  .side{display:none}
+  .main{padding:10px 0 20px}
+  .top{padding:0 12px}
+  .top .badge{display:none}
+  .top .l{flex:0 0 auto}
+  .top .c{text-align:center}
+  .top .r{flex:0 0 auto}
+  .top .swm{display:inline-flex;padding:0}
+  .top .swm .mark{width:34px;height:34px;border-radius:8px;font-size:12px}
+  .top .book{padding:10px 14px}
+  .logo i{width:34px;height:16px}.logo b{font-size:12px}
+  .mbadge{display:block;padding:6px 16px 0;font-size:10px;font-weight:600;letter-spacing:.2em;color:var(--sage2)}
+  .strip{--rw:22px;--aw:176px;--ah:313px;--k:.8;gap:5px;padding:18px 0;min-height:360px}
+  .reel{border-radius:8px}
+  .reel .tg{display:none}
+  .now{padding:0 18px;gap:10px}
+  .now .txt{flex-basis:100%}
+  .now h1{font-size:26px}
+  .now .btn{flex:1 1 0;padding:12px 10px;white-space:nowrap}
+  .mnav{display:flex;gap:8px;overflow-x:auto;padding:16px 12px 4px;scrollbar-width:none}
+  .mnav::-webkit-scrollbar{display:none}
+  .mnav .chip{flex:0 0 auto}
+  .lib{padding:44px 16px 24px;gap:40px}
+  .rowh h2{font-size:26px}
+  .card{width:150px}
+  .row.wrap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}
+  .row.wrap .card{width:auto}
+  .inner{padding:64px 16px}
+  .pkgs{grid-template-columns:1fr}
+  #book{padding:64px 16px}
+  .bk{gap:32px}
+  .bkc{padding:22px}
+  .prow .ps{gap:18px;flex:1 1 auto}
+  .prow .ps div{align-items:flex-start;min-width:56px}
+  .pgrp h3{font-size:24px}
+  footer{padding:28px 16px 40px}
+  .pw{flex-direction:column;gap:16px;padding:60px 16px 20px;justify-content:flex-start;overflow-y:auto}
+  .pv{height:auto;width:min(100%,calc(62vh*9/16));flex:0 0 auto}
+  .pw.wide .pv{width:100%}
+  .pi{flex:0 0 auto;width:100%}
+  .pi h2{font-size:26px}
+  .pi .acts{flex-direction:row;flex-wrap:wrap}
+  .px{top:10px;right:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reel,.tile .sq,.thumb,.btn{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ WHO'S WATCHING ============ -->
+<section id="picker" hidden>
+  <div class="wall" id="pwall" aria-hidden="true"></div>
+  <div class="veil" aria-hidden="true"></div>
+  <header><a class="logo" href="#profiles" aria-label="Reel Estate Media"><i aria-hidden="true"></i><b>REEL ESTATE MEDIA</b></a></header>
+  <div class="pick">
+    <h1 class="serif">Who's watching?</h1>
+    <p class="lead">Partner brokerages sign in to their own private library.</p>
+    <div class="tiles" id="tiles"></div>
+    <a class="cta" href="#solo" data-book>Not a partner yet? Book a shoot</a>
+    <div class="views" id="views">
+      <div class="vrow"><b data-total>511,006</b><span>views</span></div>
+      <small>across Instagram, on <i data-count>133</i> reels we have shot and edited</small>
+      <span class="vgain" id="vgain" hidden></span>
+      <a class="igb" href="https://www.instagram.com/thereelestatemedia/" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4.2"></circle><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"></circle></svg><span>Follow @thereelestatemedia</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTNER SIGN-IN ============ -->
+<section id="login" hidden>
+  <img class="blur" id="lblur" alt="" aria-hidden="true">
+  <header><a class="navb" href="#profiles"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>All profiles</a></header>
+  <div class="signwrap">
+    <form class="sign" id="signform" novalidate>
+      <div class="who">
+        <span class="mark" id="lmark"></span>
+        <div><div class="eyebrow" style="color:var(--sage);font-size:11px">Partner sign-in</div><div id="llabel" style="font-size:18px;font-weight:600"></div></div>
+      </div>
+      <h1 class="serif">Your office's private reel library.</h1>
+      <label class="field" for="lemail">Email<input id="lemail" type="email" autocomplete="username" placeholder="you@brokerage.com"></label>
+      <label class="field" for="lpass"><span id="lpasslabel">Password</span><input id="lpass" type="password" autocomplete="current-password"></label>
+      <p class="note" id="lnote">Preview only. Sign-in is not switched on in this copy, so leave the fields empty and press Sign in to open the library.</p>
+      <p class="note err" id="lerr" hidden role="alert"></p>
+      <button type="submit" class="btn cream" id="lgo">Sign in</button>
+      <div class="foot"><button type="button" class="linkb" id="lforgot">Forgot password?</button><span>Need access? Ask your office admin.</span></div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ LIBRARY (one per profile) ============ -->
+<div id="hub" hidden>
+  <section class="show" aria-label="Reel showcase">
+    <div class="wall" id="hwall" aria-hidden="true"></div>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="stage">
+      <aside class="side">
+        <label class="search" for="q"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg><input id="q" type="search" placeholder="Search" aria-label="Search this library"></label>
+        <nav aria-label="Library" id="nav"></nav>
+        <a class="navb switch" href="#profiles"><span class="mark" data-mark></span><span><span class="n" data-label></span><span class="s">Switch profile</span></span></a>
+      </aside>
+      <div class="main">
+        <div class="top">
+          <div class="l"><span class="eyebrow badge" id="badge"></span><a class="navb swm" href="#profiles" aria-label="Switch profile"><span class="mark" data-mark></span></a></div>
+          <div class="c"><span class="logo"><i aria-hidden="true"></i><b>REEL ESTATE MEDIA</b></span></div>
+          <div class="r"><a class="book" href="#book" data-scroll="book">Book a shoot</a></div>
+        </div>
+        <div class="mbadge" id="mbadge"></div>
+        <div class="strip" id="strip"></div>
+        <div class="now">
+          <div class="txt">
+            <span class="eyebrow" id="ntag"></span>
+            <h1 class="serif" id="ntitle"></h1>
+            <p id="nmeta"></p>
+          </div>
+          <button type="button" class="btn cream" id="watch"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4v16l13-8z"></path></svg>Watch reel</button>
+          <button type="button" class="btn ghost" id="second"></button>
+        </div>
+        <div class="mnav" id="mnav"></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="lib" id="library">
+    <div class="chips" id="chips" hidden></div>
+    <div id="rows"></div>
+  </main>
+
+  <section class="cream" id="packages">
+    <div class="inner">
+      <div class="pkh">
+        <div><span class="eyebrow" id="pkeyebrow">Packages</span><h2 class="serif">Every listing deserves <em>a premiere.</em></h2></div>
+        <p>Flat rates. Pick what you need and choose a time on our calendar.</p>
+      </div>
+      <div class="pkgs">
+        <article class="pkg">
+          <div class="ph"><img loading="lazy" src="media/vault/v75.jpg" alt="Frame from a personal brand reel" style="object-position:50% 55%"></div>
+          <div class="bd"><span class="flag">SOCIAL REELS</span><h3>Dynamic Shoot Reels</h3><div class="pr" id="pk1">$200 <small>per reel, 5 for $850, 10 for $1,500</small></div>
+          <ul><li>1, 5 or 10 reels per booking</li><li>On location, gimbal and cinematic capture</li><li>Up to 30 seconds per reel</li></ul>
+          <a href="https://calendly.com/hello-reelestatemedia/dynamic-shoot" target="_blank" rel="noopener">Book on Calendly <span aria-hidden="true">→</span></a></div>
+        </article>
+        <article class="pkg mid">
+          <div class="ph"><img loading="lazy" src="media/vault/v02.jpg" alt="Frame from a listing reel" style="object-position:50% 45%"></div>
+          <div class="bd"><span class="flag">LISTING PACKAGE</span><h3>Listing Video + Photo</h3><div class="pr" id="pk2">$450 <small>photos and video in one booking</small></div>
+          <ul><li>HDR photo set of the home</li><li>Listing video for MLS and social</li><li>Photos in about 3 days, video in about 5</li></ul>
+          <a href="https://calendly.com/hello-reelestatemedia/professional-listing-video-photo-package" target="_blank" rel="noopener">Book on Calendly <span aria-hidden="true">→</span></a></div>
+        </article>
+        <article class="pkg">
+          <div class="ph"><img loading="lazy" src="media/vault/v70.jpg" alt="Frame from a new-build reel" style="object-position:50% 60%"></div>
+          <div class="bd"><span class="flag">LUXURY</span><h3>Luxury Property Film</h3><div class="pr" id="pk3">$1,000 <small>film, drone, reel and MLS link</small></div>
+          <ul><li>Cinematic film with drone</li><li>Tier 1 Instagram reel</li><li>MLS-ready video link</li></ul>
+          <a href="https://calendly.com/hello-reelestatemedia/luxury-property-film-package" target="_blank" rel="noopener">Book on Calendly <span aria-hidden="true">→</span></a></div>
+        </article>
+      </div>
+      <div class="plist" id="prices"></div>
+      <p class="pfine">Prices are in Canadian dollars, plus HST. Weekend shoots and shoots between 6 and 8 am or 6 and 9 pm carry a $50 fee.</p>
+    </div>
+  </section>
+
+  <section id="book">
+    <div class="bk">
+      <div class="l">
+        <span class="eyebrow">Where listings get reel</span>
+        <h2 class="serif" id="booktitle"></h2>
+        <p>Pick a service and choose a time on our calendar. After you book, we call you to confirm the details.</p>
+      </div>
+      <div class="bkc">
+        <a class="btn cream" href="https://calendly.com/hello-reelestatemedia" target="_blank" rel="noopener">Book a shoot on Calendly</a>
+        <a class="btn ghost" href="https://calendly.com/hello-reelestatemedia/initial-consultation" target="_blank" rel="noopener">Book an initial consultation</a>
+        <a class="btn ghost" href="#packages" data-scroll="packages">See every price</a>
+        <p>Booking opens in a new tab. Every agent who books gets their own Content Hub to review and download the work.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="f">
+      <span class="logo"><i aria-hidden="true"></i><b>REEL ESTATE MEDIA</b></span>
+      <span class="tag">WHERE LISTINGS GET REEL</span>
+      <span>Agent bookings and hubs run on <a href="https://thecontenthub.ca/" style="color:var(--sage)">The Content Hub</a></span>
+      <a class="fig" href="https://www.instagram.com/thereelestatemedia/" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="16" height="16" rx="5"></rect><circle cx="12" cy="12" r="4.2"></circle><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"></circle></svg>@thereelestatemedia</a>
+      <button type="button" class="linkb" id="signout" hidden>Sign out</button>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ PLAYER ============ -->
+<dialog id="player" aria-label="Reel player">
+  <div class="pw" id="pw">
+    <div class="pv"><video id="pvid" controls playsinline preload="none"></video></div>
+    <div class="pi">
+      <span class="eyebrow" id="ptag"></span>
+      <h2 class="serif" id="ptitle"></h2>
+      <p id="pmeta"></p>
+      <div class="acts">
+        <button type="button" class="btn cream" id="pbook">Book a shoot like this</button>
+        <a class="btn ghost" id="pdl" download hidden><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"></path></svg>Download</a>
+      </div>
+      <div class="pn">
+        <button type="button" class="rnd" id="pprev" aria-label="Previous reel"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+        <button type="button" class="rnd" id="pnext" aria-label="Next reel"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
+      </div>
+    </div>
+    <button type="button" class="rnd px" id="pclose" aria-label="Close player"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  'use strict';
+  var M='media/';
+  var CAL='https://calendly.com/hello-reelestatemedia';
+  /* Partner sign-in runs on the Content Hub Supabase project. Paste the project's anon (publishable) key below to switch it on.
+     With no key the page stays in preview: Sign in opens the library without checking anything. */
+  var SUPA_URL='https://bsfcjyddfcasatijyrdr.supabase.co';
+  var SUPA_KEY='sb_publishable_FuuE3suWxjFo7UEcyie41g_mH40W82Y';   // publishable key: safe in a browser, access is decided by the row rules
+  var SUPA_LIB='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js';
+  var BUCKET='rem-libraries';
+  var sb=null,recover=false;
+  var $=function(id){return document.getElementById(id);};
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- the reels: every finished reel in the Vault. The list between the markers is written by build_lib.py ---------- */
+  var LIB=/*LIB*/[{"k":"v09","t":"Mavis & Dundas","a":"Faiz Tahir","co":"P","c":"precon","l":"1:02","dt":"2026-11-25"},{"k":"v10","t":"Night drive","a":"Faiz Tahir","co":"P","c":"brand","l":"0:29","dt":"2026-11-23","w":1},{"k":"v12","t":"Cornerstone","a":"Jas Chohan","co":"P","c":"precon","l":"0:25","dt":"2026-11-22"},{"k":"v11","t":"Abacot Hill","a":"Jas Chohan","co":"P","c":"precon","l":"0:30","dt":"2026-11-22"},{"k":"v02","t":"32 Camberley Rd, Brampton","a":"Param Bajarh","co":"S","c":"listings","l":"1:06","dt":"2026-11-21"},{"k":"v01","t":"Kozak ad","a":"Tejvir Dhuga","co":"S","c":"brand","l":"0:37","dt":"2026-11-21"},{"k":"v13","t":"End of year goals","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:39","dt":"2026-11-20"},{"k":"v14","t":"Elements","a":"Safwat Butt","co":"P","c":"precon","l":"0:32","dt":"2026-11-18"},{"k":"v03","t":"LoopNet","a":"Tejvir Dhuga","co":"S","c":"brand","l":"0:34","dt":"2026-11-18"},{"k":"v15","t":"Abacot Hill","a":"Jasi Shoker","co":"P","c":"precon","l":"0:36","dt":"2026-11-14"},{"k":"v07","t":"Milton pre-construction","a":"Tanuj Rajpal","co":"Remax Millenium","c":"precon","l":"0:44","dt":"2026-11-14"},{"k":"v19","t":"Five Oaks","a":"Alex Tang","co":"P","c":"precon","l":"0:10","dt":"2026-11-13"},{"k":"v18","t":"Punjabi reel","a":"Jas Chohan","co":"P","c":"brand","l":"0:50","dt":"2026-11-13"},{"k":"v17","t":"Advice series, bonus reel","a":"Zain Merchant","co":"P","c":"brand","l":"1:04","dt":"2026-11-13"},{"k":"v16","t":"Team training","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"0:50","dt":"2026-11-13"},{"k":"v27","t":"Cornerstone","a":"Noah Lakhani","co":"P","c":"precon","l":"0:13","dt":"2026-11-10"},{"k":"v26","t":"Milton buyers","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:26","dt":"2026-11-10"},{"k":"v25","t":"Oakville buyers","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:19","dt":"2026-11-10"},{"k":"v24","t":"Agents","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:14","dt":"2026-11-10"},{"k":"v23","t":"Advice series, part 10","a":"Zain Merchant","co":"P","c":"brand","l":"0:36","dt":"2026-11-10"},{"k":"v22","t":"Happy Halloween","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"0:36","dt":"2026-11-10"},{"k":"v21","t":"Royal LePage National Sales Conference 2026, short cut","a":"Faiz Tahir","co":"P","c":"events","l":"0:50","dt":"2026-11-10","w":1},{"k":"v20","t":"Royal LePage National Sales Conference 2026","a":"Faiz Tahir","co":"P","c":"events","l":"2:18","dt":"2026-11-10","w":1},{"k":"v04","t":"Diwali","a":"Tejvir Dhuga","co":"S","c":"brand","l":"0:46","dt":"2026-11-10"},{"k":"v05","t":"Office tour","a":"Tejvir Dhuga","co":"S","c":"brand","l":"0:59","dt":"2026-11-07"},{"k":"v06","t":"Wealth Summit","a":"Preeya Cheema","co":"PKC Law","c":"events","l":"0:53","dt":"2026-11-05"},{"k":"v29","t":"Hindi reel","a":"Jas Chohan","co":"P","c":"brand","l":"0:42","dt":"2026-11-04"},{"k":"v28","t":"English reel","a":"Jas Chohan","co":"P","c":"brand","l":"0:35","dt":"2026-11-04"},{"k":"v31","t":"OG Towns event recap, part 2","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"0:36","dt":"2026-11-03"},{"k":"v30","t":"OG Towns event recap, part 1","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:05","dt":"2026-11-03"},{"k":"v33","t":"Cornerstone by Primont","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:19","dt":"2026-10-22"},{"k":"v32","t":"Abacot Hill by Hallet Homes","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:26","dt":"2026-10-22"},{"k":"v38","t":"Five Oaks","a":"Salman Syed Laiq","co":"P","c":"precon","l":"0:37","dt":"2026-10-12"},{"k":"v37","t":"The team","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:14","dt":"2026-10-12"},{"k":"v36","t":"Five Oaks","a":"Ali Mansoor Malik","co":"P","c":"precon","l":"0:35","dt":"2026-10-12"},{"k":"v35","t":"Advice series, part 7","a":"Zain Merchant","co":"P","c":"brand","l":"0:28","dt":"2026-10-12"},{"k":"v34","t":"Five Oaks event recap","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:18","dt":"2026-10-12"},{"k":"v44","t":"Five Oaks","a":"Yovan Gabric","co":"P","c":"precon","l":"0:22","dt":"2026-10-10"},{"k":"v43","t":"OG Towns","a":"Sofia Badruddin","co":"P","c":"precon","l":"0:31","dt":"2026-10-10"},{"k":"v42","t":"Five Oaks","a":"Sofia Badruddin","co":"P","c":"precon","l":"0:22","dt":"2026-10-10"},{"k":"v41","t":"Five Oaks","a":"Syed Naqvi","co":"P","c":"precon","l":"0:14","dt":"2026-10-10"},{"k":"v40","t":"Five Oaks","a":"Safwat Butt","co":"P","c":"precon","l":"0:13","dt":"2026-10-10"},{"k":"v39","t":"Five Oaks","a":"Faiz Tahir","co":"P","c":"precon","l":"0:25","dt":"2026-10-10"},{"k":"v47","t":"OG Towns","a":"Jas Chohan","co":"P","c":"precon","l":"0:37","dt":"2026-10-07"},{"k":"v46","t":"Five Oaks","a":"Jas Chohan","co":"P","c":"precon","l":"0:31","dt":"2026-10-07"},{"k":"v45","t":"OG Towns","a":"Humza Khan","co":"P","c":"precon","l":"0:25","dt":"2026-10-07"},{"k":"v48","t":"Five Oaks","a":"Ali Mansoor Malik","co":"P","c":"precon","l":"0:35","dt":"2026-10-05"},{"k":"v54","t":"South Banks","a":"Ali Mansoor Malik","co":"P","c":"precon","l":"0:18","dt":"2026-10-01"},{"k":"v53","t":"Before real estate, part 2","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:59","dt":"2026-10-01"},{"k":"v52","t":"Office tour","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:39","dt":"2026-10-01","w":1},{"k":"v51","t":"Recruitment, part 3","a":"Faiz Tahir","co":"P","c":"recruiting","l":"0:13","dt":"2026-10-01"},{"k":"v50","t":"Recruitment, part 2","a":"Faiz Tahir","co":"P","c":"recruiting","l":"0:12","dt":"2026-10-01"},{"k":"v49","t":"Recruitment, part 1","a":"Faiz Tahir","co":"P","c":"recruiting","l":"0:21","dt":"2026-10-01"},{"k":"v08","t":"Listing walkthrough","a":"Matien Nazier","co":"Royal LePage Certified","c":"listings","l":"0:51","dt":"2026-10-01"},{"k":"v55","t":"Documentary-style reel","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:37","dt":"2026-09-22"},{"k":"v56","t":"Cash grab","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:07","dt":"2026-09-20"},{"k":"v59","t":"Advice series, part 8","a":"Zain Merchant","co":"P","c":"brand","l":"0:26","dt":"2026-09-17"},{"k":"v58","t":"Advice series, part 6","a":"Zain Merchant","co":"P","c":"brand","l":"0:44","dt":"2026-09-17"},{"k":"v57","t":"Advice series, part 5","a":"Zain Merchant","co":"P","c":"brand","l":"0:17","dt":"2026-09-17"},{"k":"v61","t":"Aura, final phase","a":"Faiz Tahir","co":"P","c":"precon","l":"0:37","dt":"2026-09-15"},{"k":"v60","t":"Commercial advert","a":"Faiz Tahir","co":"P","c":"brand","l":"0:38","dt":"2026-09-15"},{"k":"v63","t":"Trunk reel with Ayesha","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:14","dt":"2026-09-04"},{"k":"v62","t":"Advice series, part 4","a":"Zain Merchant","co":"P","c":"brand","l":"1:07","dt":"2026-09-04"},{"k":"v64","t":"Appreciation Day","a":"Salman Syed Laiq","co":"P","c":"events","l":"0:27","dt":"2026-09-03"},{"k":"v65","t":"Intro with Ayesha","a":"Ali Mansoor Malik","co":"P","c":"brand","l":"0:16","dt":"2026-09-02"},{"k":"v66","t":"Crew walk","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:10","dt":"2026-08-24"},{"k":"v67","t":"Scott & Faiz","a":"Faiz Tahir","co":"P","c":"brand","l":"0:25","dt":"2026-08-17"},{"k":"v69","t":"Faiz’s story, part 2","a":"Faiz Tahir","co":"P","c":"brand","l":"0:20","dt":"2026-08-12"},{"k":"v68","t":"Faiz’s story, part 1","a":"Faiz Tahir","co":"P","c":"brand","l":"0:12","dt":"2026-08-12"},{"k":"v70","t":"New bungalow in Burlington","a":"Syed Naqvi","co":"P","c":"listings","l":"0:21","dt":"2026-08-08"},{"k":"v71","t":"Chris Leader workshop","a":"Faiz Tahir","co":"P","c":"events","l":"0:34","dt":"2026-08-07"},{"k":"v72","t":"Before real estate, part 1","a":"Royal LePage Pinnacle","co":"P","c":"brand","l":"0:47","dt":"2026-07-28"},{"k":"v74","t":"Advice series, part 3","a":"Zain Merchant","co":"P","c":"brand","l":"1:01","dt":"2026-07-22"},{"k":"v73","t":"Advice series, part 1","a":"Zain Merchant","co":"P","c":"brand","l":"0:57","dt":"2026-07-22"},{"k":"v76","t":"Join Pinnacle","a":"Royal LePage Pinnacle","co":"P","c":"recruiting","l":"0:46","dt":"2026-07-21"},{"k":"v75","t":"G-Wagon pickup","a":"Faiz Tahir","co":"P","c":"brand","l":"1:06","dt":"2026-07-21"},{"k":"v77","t":"Gravenhurst","a":"Harris Durrani","co":"P","c":"listings","l":"0:58","dt":"2026-07-15"},{"k":"v78","t":"Pre-construction training and Oakville tour","a":"Royal LePage Pinnacle","co":"P","c":"events","l":"1:07","dt":"2026-07-09"}]/*END*/;
+  var TAGS={listings:'Listing reel',precon:'Pre-construction',recruiting:'Recruiting',events:'Event',brand:'Brand reel'};
+  var CATS={listings:'Listings',precon:'Pre-construction',recruiting:'Recruiting',events:'Events',brand:'Brand',wide:'Widescreen'};
+  var CO={S:'RE/MAX Skyway',P:'Royal LePage Pinnacle'};
+  var R={};
+  LIB.forEach(function(x){var co=CO[x.co]||x.co,who=x.a===co?co:x.a+', '+co;
+    R[x.k]={key:x.k,f:(x.a+' '+x.t).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),t:x.t,agent:x.a,co:x.co,tag:TAGS[x.c]||'',cat:x.c,len:x.l,wide:!!x.w,
+      d:(TAGS[x.c]||'Reel')+' for '+who+'.',src:M+'vault/'+x.k+'.mp4',poster:M+'vault/'+x.k+'.jpg'};});
+  function keysOf(test){return LIB.filter(test).map(function(x){return x.k;});}
+
+  /* ---------- the profiles: each one is a slice of the same library ---------- */
+  var P={};
+  function profile(k,o,keys){
+    var tall=keys.filter(function(q){return !R[q].wide;}),wide=keys.filter(function(q){return R[q].wide;});
+    var cats=Object.keys(TAGS).filter(function(c){return keys.some(function(q){return R[q].cat===c;});});
+    o.strip=tall.slice(0,7);o.tile='vault/'+(o.strip[0]||keys[0]||'');o.count=keys.length;
+    o.nav=[[o.home||'Home','']].concat(cats.slice(0,3).map(function(c){return [CATS[c],c];})).concat([['Packages','#packages']]);
+    if(keys.length<=10){o.rows=[{title:o.first,sub:keys.length+(keys.length===1?' reel':' reels'),wrap:true,items:keys}];}
+    else{o.chips=true;o.rows=[{title:'Latest',sub:'Most recent first',items:keys.slice(0,12)}].concat(cats.map(function(c){
+        var it=keys.filter(function(q){return R[q].cat===c&&!R[q].wide;});return {title:CATS[c],sub:it.length+(it.length===1?' reel':' reels'),items:it};}).filter(function(r){return r.items.length;}));
+      if(wide.length)o.rows.push({title:'Widescreen',sub:wide.length+(wide.length===1?' film':' films'),items:wide});}
+    P[k]=o;}
+  profile('skyway',{label:'RE/MAX Skyway',mark:'RS',logo:'logo-skyway.png',bg:'#000',fg:'#F4EFE4',line:'#2B3832',locked:true,dl:true,note:'PARTNER SIGN-IN',
+    badge:'RE/MAX Skyway · Private',pk:'Your packages',book:'Book your office’s next shoot.',second:'Browse downloads',first:'Made for RE/MAX Skyway',rate:'r'},keysOf(function(x){return x.co==='S';}));
+  profile('pinnacle',{label:'Royal LePage Pinnacle',mark:'RP',logo:'logo-pinnacle.png',bg:'#000',fg:'#F4EFE4',line:'#2B3832',locked:true,dl:true,note:'PARTNER SIGN-IN',
+    badge:'Royal LePage Pinnacle · Private',pk:'Your packages',book:'Book your office’s next shoot.',second:'Browse downloads',first:'Made for Royal LePage Pinnacle',rate:'p'},keysOf(function(x){return x.co==='P';}));
+  profile('solo',{label:'Solo agents',mark:'SA',bg:'#F4EFE4',fg:'#18201C',line:'#F4EFE4',locked:false,dl:false,note:'OPEN TO ALL',
+    badge:'Solo agents',pk:'Packages',book:'Your listing, next on the wall.',second:'Book a shoot',first:'Made for independent agents'},keysOf(function(x){return x.co!=='S'&&x.co!=='P';}));
+  profile('all',{label:'All videos',mark:'▶',bg:'#141C18',fg:'#F4EFE4',line:'#3B4A43',locked:false,dl:false,note:'FULL LIBRARY',home:'All videos',
+    badge:'All videos',pk:'Packages',book:'Your listing, next on the wall.',second:'Book a shoot',first:'Everything we have made'},keysOf(function(){return true;}));
+  var ORDER=['skyway','pinnacle','solo','all'];
+  var unlocked={};
+  var state={profile:null,active:3,cat:'',q:''};
+  var OFFS=[-36,30,-10,0,44,-24,18], HTS=[270,300,250,285,290,260,280];
+
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+  function paintMark(el,p){el.textContent=p.mark;el.style.background=p.bg;el.style.color=p.fg;el.style.borderColor=p.line;}
+  function paintLogo(el,p){paintMark(el,p);el.classList.toggle('lg',!!p.logo);if(p.logo)el.innerHTML='<img alt="" src="'+M+p.logo+'">';}
+  var LOCK='<span class="lock"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></span>';
+  var PLAY='<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"></path></svg>';
+
+  /* ---------- walls of stills ---------- */
+  var WALL=LIB.filter(function(x){return !x.w;}).map(function(x){return x.k;});
+  function wall(el,n){var h='';for(var i=0;i<n&&WALL.length;i++){h+='<img loading="lazy" decoding="async" alt="" src="'+M+'vault/'+WALL[(i*7+Math.floor(i/WALL.length))%WALL.length]+'-w.webp">';}el.innerHTML=h;}
+  wall($('pwall'),72); wall($('hwall'),50);
+
+  /* ---------- picker ---------- */
+  $('tiles').innerHTML=ORDER.map(function(k){var p=P[k];
+    return '<a class="tile" href="#'+k+'"><span class="sq" style="background:'+p.bg+';color:'+p.fg+';border-color:'+p.line+'">'+
+      (k==='all'?'<img alt="" src="'+M+p.tile+'.jpg">':'')+(p.logo?'<img class="lg" alt="'+esc(p.label)+' logo" src="'+M+p.logo+'">':'<span>'+p.mark+'</span>')+(p.locked?LOCK:'')+'</span><span>'+esc(p.label)+'</span><small>'+p.note+'</small></a>';
+  }).join('');
+
+  /* ---------- hub ---------- */
+  function pool(p){var seen={},out=[];p.rows.forEach(function(r){r.items.forEach(function(k){if(!seen[k]){seen[k]=1;out.push(k);}});});return out;}
+  function match(k){var r=R[k];
+    if(state.cat){if(state.cat==='wide'){if(!r.wide)return false;}else if(r.cat!==state.cat)return false;}
+    if(state.q){var s=(r.t+' '+r.tag+' '+r.d+' '+(r.agent||'')).toLowerCase();if(s.indexOf(state.q)<0)return false;}
+    return true;}
+  function card(k,p){var r=R[k];
+    return '<div class="card'+(r.wide?' wide':'')+'"><button type="button" class="thumb" data-play="'+k+'" aria-label="Play: '+esc(r.t)+'">'+
+      '<img loading="lazy" decoding="async" alt="" src="'+r.poster+'"><span class="pl">'+PLAY+'</span><span class="len">'+r.len+'</span></button>'+
+      '<div class="meta"><span class="t">'+esc(r.t)+'</span><span class="g">'+esc(r.agent?r.agent+(r.tag?' \u00B7 '+r.tag:''):r.tag)+'</span>'+
+      (p.dl?'<a class="dl" href="'+r.src+'" download="'+r.f+'.mp4"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"></path></svg>Download</a>':'')+
+      '</div></div>';}
+  var list=[];   // what the player steps through
+  function rows(){var p=P[state.profile],h='';
+    if(state.cat||state.q){
+      var hit=pool(p).filter(match); list=hit;
+      var name=state.q?'Results for “'+esc(state.q)+'”':CATS[state.cat];
+      h='<section><div class="rowh"><h2 class="serif">'+name+'</h2><span>'+hit.length+(hit.length===1?' video':' videos')+'</span>'+
+        '<button type="button" class="chip" data-clear>Show everything</button></div>'+
+        (hit.length?'<div class="row wrap">'+hit.map(function(k){return card(k,p);}).join('')+'</div>':'<p class="empty">Nothing here yet. Try another word, or show everything.</p>')+'</section>';
+    }else{
+      list=pool(p);
+      h=p.rows.map(function(r,i){return '<section'+(i?' style="margin-top:52px"':'')+'><div class="rowh"><h2 class="serif">'+esc(r.title)+'</h2><span>'+esc(r.sub)+'</span></div><div class="row'+(r.wrap?' wrap':'')+'">'+r.items.map(function(k){return card(k,p);}).join('')+'</div></section>';}).join('');
+    }
+    $('rows').innerHTML=h;
+    var on=state.cat;
+    document.querySelectorAll('[data-cat]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-cat')===on&&!state.q);});
+  }
+  function now(){var p=P[state.profile],r=R[p.strip[state.active]];
+    $('ntag').textContent=(r.tag?r.tag+' \u00B7 ':'')+'0'+(state.active+1)+' / 0'+p.strip.length;
+    $('ntitle').textContent=r.t; $('nmeta').textContent=r.d;}
+  
+  /* ---------- the price list. Three rate cards: p = Royal LePage Pinnacle, r = RE/MAX Skyway, o = solo agents and everyone else.
+     A row with no price for a rate card is not offered there (the Project Tour Reel is a brokerage rate). ---------- */
+  var R3=['1 reel','5 reels','10 reels'];
+  var PRICES=[
+    ['Social reels',[
+      ['Dynamic Shoot · Tier 1','On location, with gimbal and cinematic capture. Up to 30 seconds per reel.',{p:[150,575,1000],r:[150,575,1000],o:[200,850,1500]},'dynamic-shoot'],
+      ['Podcast / Sitdown Shoot · Tier 2','Podcast-style or sitdown reels recorded in our studio. Up to 30 seconds per reel.',{p:[95,350,650],r:[115,500,900],o:[150,675,1150]},'podcast-teleprompter'],
+      ['You Shoot, We Edit','Send us your raw footage and we edit polished reels.',{p:[100,375,650],r:[80,375,650],o:[100,375,650]},'you-shoot-we-edit'],
+      ['Project Tour Reel','A 30 second project reel, filmed at the builder’s sales office. A brokerage rate.',{p:[80],r:[100]},'project-tour-reel'],
+      ['Professional Headshots','An individual session of up to 30 minutes, with up to 10 images.',{p:[100],r:[125],o:[150]},'30min']]],
+    ['Listings',[
+      ['Listing Photos','An HDR photo set of the home.',{p:[200],r:[225],o:[250]},'essential-listing-photos-20-hdr-clone'],
+      ['Listing Video','A video of the home, edited for the listing and for social.',{p:[200],r:[225],o:[250]},'listing-video'],
+      ['Professional Listing Video + Photo Package','The photo set and the listing video, booked together.',{p:[300],r:[400],o:[450]},'professional-listing-video-photo-package'],
+      ['Luxury Property Film Package','A property film with drone shots, a Tier 1 Instagram reel and an MLS link.',{p:[650],r:[850],o:[1000]},'luxury-property-film-package']]],
+    ['Events',[
+      ['Event Recap Package · Photo Coverage','Two hours on site. All high-resolution images, edited.',{p:[350],r:[350],o:[400]},'event-recap-package-photo-coverage-2-hours'],
+      ['Event Recap Package · Video Coverage','Two hours on site. Video of your event.',{p:[350],r:[350],o:[400]},'event-recap-package-video-coverage-2-hours'],
+      ['Event Recap Package · Photo and Video','Two hours on site. Both, in one booking.',{p:[600],r:[600],o:[700]},'event-recap']]]
+  ];
+  function money(n){return '$'+String(n).replace(/\B(?=(\d{3})+$)/g,',');}
+  function prices(t){
+    $('prices').innerHTML=PRICES.map(function(g){var rows=g[1].filter(function(r){return r[2][t];});
+      return rows.length?'<div class="pgrp"><h3>'+g[0]+'</h3>'+rows.map(function(r){var v=r[2][t];
+        return '<div class="prow"><div class="nm"><b>'+esc(r[0])+'</b><span>'+esc(r[1])+'</span></div><div class="ps">'+
+          v.map(function(x,i){return '<div><small>'+(v.length>1?R3[i]:'&nbsp;')+'</small><b>'+money(x)+'</b></div>';}).join('')+
+          '</div><a class="bk1" href="'+CAL+'/'+r[3]+'" target="_blank" rel="noopener" aria-label="Book '+esc(r[0])+' on Calendly">Book</a></div>';}).join('')+'</div>':'';}).join('');
+    var d=PRICES[0][1][0][2][t],l=PRICES[1][1];
+    $('pk1').innerHTML=money(d[0])+' <small>per reel, 5 for '+money(d[1])+', 10 for '+money(d[2])+'</small>';
+    $('pk2').firstChild.nodeValue=money(l[2][2][t][0])+' ';
+    $('pk3').firstChild.nodeValue=money(l[3][2][t][0])+' ';}
+
+  function strip(){var p=P[state.profile];
+    $('strip').innerHTML=p.strip.map(function(k,i){var r=R[k];
+      return '<button type="button" class="reel'+(i===state.active?' on':'')+'" data-i="'+i+'" aria-label="Preview: '+esc(r.t)+'" style="--h:'+HTS[i%7]+'px;--mt:'+OFFS[i%7]+'px">'+
+        '<video src="'+r.src+'" poster="'+r.poster+'" muted loop playsinline preload="none"></video><span class="dim"></span><span class="tg">'+esc(r.tag)+'</span><span class="go" aria-hidden="true">'+PLAY+'</span></button>';
+    }).join('');
+    sync();}
+  function sync(){var open=$('player').open;
+    $('strip').querySelectorAll('.reel').forEach(function(b,i){var v=b.querySelector('video');v.muted=true;
+      var on=i===state.active;b.classList.toggle('on',on);
+      if(on&&!open&&!reduce&&!$('hub').hidden){var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});}else{v.pause();}});
+    now();}
+  function pick(i){if(state.active!==i){state.active=i;sync();}}
+  function hub(k){var p=P[k];state.profile=k;state.active=Math.min(3,Math.floor((p.strip.length-1)/2));state.cat='';state.q='';$('q').value='';
+    document.querySelectorAll('[data-mark]').forEach(function(el){paintMark(el,p);});
+    document.querySelectorAll('[data-label]').forEach(function(el){el.textContent=p.label;});
+    $('badge').textContent=p.badge; $('mbadge').textContent=p.badge.toUpperCase();
+    prices(p.rate||'o');
+    $('second').textContent=p.second; $('pkeyebrow').textContent=p.pk; $('booktitle').textContent=p.book;
+    var navh=function(base){return p.nav.map(function(n,i){var t=n[1],c=(base+(i===0?' on':'')).trim();return '<button type="button" '+(t.charAt(0)==='#'?'data-scroll="'+t.slice(1)+'"':'data-cat="'+t+'"')+(c?' class="'+c+'"':'')+'>'+esc(n[0])+'</button>';}).join('');};
+    $('nav').innerHTML=navh(''); $('mnav').innerHTML=navh('chip');
+    var ch=$('chips');
+    if(p.chips){ch.hidden=false;ch.innerHTML=[['All','']].concat(Object.keys(CATS).filter(function(c){return pool(p).some(function(q){return c==='wide'?R[q].wide:R[q].cat===c;});}).map(function(c){return [CATS[c],c];})).map(function(c){return '<button type="button" class="chip'+(c[1]===''?' on':'')+'" data-cat="'+c[1]+'">'+c[0]+'</button>';}).join('');}
+    else{ch.hidden=true;ch.innerHTML='';}
+    strip(); rows();}
+
+  /* ---------- screens + routes ---------- */
+  function show(id){['picker','login','hub'].forEach(function(s){$(s).hidden=s!==id;});
+    if(id!=='hub'){$('strip').querySelectorAll('video').forEach(function(v){v.pause();});}
+    window.scrollTo(0,0);if(id==='picker'&&typeof vroll==='function')vroll();}
+  var after=null;
+  function route(){var k=(location.hash||'').replace('#','');
+    if(P[k]){var p=P[k];
+      if(p.locked&&!unlocked[k]){paintLogo($('lmark'),p);$('llabel').textContent=p.label;$('lblur').src=M+p.tile+'.jpg';$('signform').setAttribute('data-k',k);show('login');return;}
+      if(sb&&p.locked&&!p.own&&!p.loading){p.loading=true;var fin=function(){p.loading=false;p.own=true;route();};library(k).then(fin,fin);return;}
+      show('hub');hub(k);
+      if(after){var a=after;after=null;setTimeout(function(){go(a);},60);}
+      return;}
+    if(k==='book'||k==='packages'||k==='library'){if(state.profile&&!$('hub').hidden){return;} after=k;location.hash='solo';return;}
+    show('picker');}
+  function go(id){var el=$(id);if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});}
+  window.addEventListener('hashchange',route);
+  /* ---------- partner sign-in (Supabase) ---------- */
+  function lerr(t){var el=$('lerr');el.textContent=t||'';el.hidden=!t;}
+  function busy(on){$('lgo').disabled=on;$('lgo').textContent=on?'One moment\u2026':(recover?'Save new password':'Sign in');}
+  function members(){   // which libraries this account may open
+    return sb.auth.getUser().then(function(u){var id=u.data&&u.data.user&&u.data.user.id;if(!id)return [];
+      return sb.from('rem_library_members').select('library').eq('user_id',id).then(function(r){
+        var libs=(r.data||[]).map(function(x){return x.library;}).filter(function(l){return P[l]&&P[l].locked;});
+        unlocked={};libs.forEach(function(l){unlocked[l]=true;});$('signout').hidden=false;return libs;});});}
+  function library(k){   // the library's own reels, from its private folder; signed links last an hour
+    return sb.from('rem_library_reels').select('*').eq('library',k).order('sort').order('created_at',{ascending:false}).then(function(r){
+      var rows=r.data||[];if(!rows.length)return;
+      var paths=[];rows.forEach(function(x){paths.push(x.video_path,x.poster_path);});
+      return sb.storage.from(BUCKET).createSignedUrls(paths,3600).then(function(sg){
+        var url={};(sg.data||[]).forEach(function(x){if(x.signedUrl)url[x.path]=x.signedUrl;});
+        var keys=[];rows.forEach(function(x){if(!url[x.video_path])return;var key=k+'-'+x.id;
+          R[key]={key:key,f:String(x.title||'reel').toLowerCase().replace(/[^a-z0-9]+/g,'-'),t:x.title,tag:x.tag||'',cat:x.category||'',len:x.length||'',wide:!!x.wide,d:x.description||'',src:url[x.video_path],poster:url[x.poster_path]||''};keys.push(key);});
+        if(!keys.length)return;
+        P[k].rows=[{title:'For '+P[k].label+' agents',sub:'Private to your office',wrap:true,items:keys}].concat(P[k].rows.filter(function(r){return !r.priv;}));
+        P[k].rows[0].priv=true;});});}
+  function enter(k){if(location.hash==='#'+k)route();else location.hash=k;}
+  $('signform').addEventListener('submit',function(e){e.preventDefault();var k=this.getAttribute('data-k');lerr('');
+    if(!sb){unlocked[k]=true;$('lemail').value='';$('lpass').value='';route();return;}
+    var em=$('lemail').value.trim(),pw=$('lpass').value,down='We could not reach the sign-in service. Check your connection and try again.';
+    if(recover){if(pw.length<8){lerr('Choose a password of at least 8 characters.');return;}
+      busy(true);sb.auth.updateUser({password:pw}).then(function(r){
+        if(r.error){busy(false);lerr('That password could not be saved. Try a different one.');return;}
+        recover=false;$('lpass').value='';$('lpasslabel').textContent='Password';$('lemail').closest('label').hidden=false;
+        return members().then(function(l){busy(false);if(l.length)enter(l[0]);else location.hash='profiles';});}).catch(function(){busy(false);lerr(down);});
+      return;}
+    if(em.indexOf('@')<1||!pw){lerr('Enter your email and password.');return;}
+    busy(true);
+    sb.auth.signInWithPassword({email:em,password:pw}).then(function(r){
+      if(r.error){busy(false);lerr(/fetch|network/i.test(r.error.message||'')?down:'That email or password is not right.');return;}
+      $('lpass').value='';
+      return members().then(function(l){busy(false);
+        if(unlocked[k]){enter(k);return;}
+        if(l.length){enter(l[0]);return;}
+        lerr('This account is not set up for a library yet. Ask your office admin, or contact us.');$('signout').hidden=true;return sb.auth.signOut();});
+    }).catch(function(){busy(false);lerr(down);});});
+  $('lforgot').addEventListener('click',function(){lerr('');var n=$('lnote');
+    if(!sb){n.hidden=false;return;}
+    var em=$('lemail').value.trim();if(em.indexOf('@')<1){lerr('Type your email above first, then press Forgot password.');return;}
+    sb.auth.resetPasswordForEmail(em,{redirectTo:location.origin+location.pathname}).then(function(){n.textContent='If that email has an account, a reset link is on its way.';n.hidden=false;});});
+  $('signout').addEventListener('click',function(){var done=function(){unlocked={};['skyway','pinnacle'].forEach(function(q){P[q].own=false;});$('signout').hidden=true;location.hash='profiles';route();};
+    if(sb)sb.auth.signOut().then(done,done);else done();});
+
+  /* ---------- clicks ---------- */
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-book],[data-scroll],[data-cat],[data-clear],[data-play],.reel');
+    if(!t)return;
+    if(t.hasAttribute('data-book')){after='book';return;}
+    if(t.hasAttribute('data-scroll')){e.preventDefault();go(t.getAttribute('data-scroll'));return;}
+    if(t.hasAttribute('data-cat')){state.cat=t.getAttribute('data-cat');state.q='';$('q').value='';rows();
+      if(state.cat)go('library');else if(t.closest('#nav,#mnav'))window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});return;}
+    if(t.hasAttribute('data-clear')){state.cat='';state.q='';$('q').value='';rows();return;}
+    if(t.hasAttribute('data-play')){openPlayer(t.getAttribute('data-play'),list);return;}
+    if(t.classList.contains('reel')){var i=+t.getAttribute('data-i');if(i===state.active)openPlayer(P[state.profile].strip[i],P[state.profile].strip);else pick(i);}
+  });
+  $('strip').addEventListener('mouseover',function(e){var b=e.target.closest('.reel');if(b&&window.matchMedia('(hover:hover)').matches)pick(+b.getAttribute('data-i'));});
+  $('strip').addEventListener('focusin',function(e){var b=e.target.closest('.reel');if(b)pick(+b.getAttribute('data-i'));});
+  $('watch').addEventListener('click',function(){var s=P[state.profile].strip;openPlayer(s[state.active],s);});
+  $('second').addEventListener('click',function(){go(P[state.profile].dl?'library':'book');});
+  $('q').addEventListener('input',function(){state.q=this.value.trim().toLowerCase();state.cat='';rows();});
+  $('q').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();go('library');}});
+
+  /* hover a card: a silent preview plays over the poster */
+  $('rows').addEventListener('mouseover',function(e){var th=e.target.closest('.thumb');if(!th||th._v||reduce||!window.matchMedia('(hover:hover)').matches)return;
+    var r=R[th.getAttribute('data-play')],v=document.createElement('video');v.muted=true;v.loop=true;v.playsInline=true;v.src=r.src;th._v=v;
+    th.insertBefore(v,th.querySelector('.pl'));var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});
+    th.addEventListener('mouseleave',function(){v.pause();v.removeAttribute('src');v.load();v.remove();th._v=null;},{once:true});});
+
+  /* ---------- player ---------- */
+  var dlg=$('player'),pv=$('pvid'),plist=[],pidx=0;
+  function load(){var r=R[plist[pidx]],p=P[state.profile];
+    $('pw').classList.toggle('wide',!!r.wide);
+    pv.poster=r.poster;pv.src=r.src;
+    $('ptag').textContent=[r.tag,r.len].filter(Boolean).join(' · ');$('ptitle').textContent=r.t;$('pmeta').textContent=r.d;
+    var d=$('pdl');d.hidden=!p.dl;if(p.dl){d.href=r.src;d.setAttribute('download',r.f+'.mp4');}
+    var multi=plist.length>1;$('pprev').hidden=!multi;$('pnext').hidden=!multi;
+    var pr=pv.play();if(pr&&pr.catch)pr.catch(function(){});}
+  function openPlayer(k,l){plist=(l&&l.indexOf(k)>=0)?l.slice():[k];pidx=plist.indexOf(k);
+    if(dlg.showModal){if(!dlg.open)dlg.showModal();}else{dlg.setAttribute('open','');}
+    sync();load();}
+  function step(n){pidx=(pidx+n+plist.length)%plist.length;load();}
+  function shut(){if(dlg.close)dlg.close();else{dlg.removeAttribute('open');stop();}}
+  function stop(){pv.pause();pv.removeAttribute('src');pv.load();sync();}
+  dlg.addEventListener('close',stop);
+  dlg.addEventListener('click',function(e){if(e.target===dlg||e.target===$('pw'))shut();});
+  $('pclose').addEventListener('click',shut);
+  $('pprev').addEventListener('click',function(){step(-1);});
+  $('pnext').addEventListener('click',function(){step(1);});
+  dlg.addEventListener('keydown',function(e){if(e.target===pv)return;if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1);});
+  $('pbook').addEventListener('click',function(){shut();go('book');});
+
+  /* ---------- Instagram views: the total The Content Hub publishes each morning (proof.json), rolled like an odometer.
+     From 0 on a first visit, from the total this visitor saw last time when it has grown. Only real readings are shown at rest.
+     The numbers in the page are the reading at publish; a fresh one replaces them when the file can be read. ---------- */
+  var HUB='https://thecontenthub.ca/',HUBREPO='CloudixC/ReelEstateMedia',BAKED={g:4743,at:Date.parse('2026-11-25T12:13:00Z')},HR=3600e3;
+  var vb=document.querySelector('#views [data-total]'),vnum=function(x){return parseInt(String(x).replace(/[^\d]/g,''),10)||0;},vfmt=function(n){return n.toLocaleString('en-CA');};
+  var vtarget=vnum(vb.textContent),vrolled=false,vsettled=false,vlast=0;
+  try{vlast=vnum((JSON.parse(localStorage.getItem('rem_views_seen')||'{}')||{}).t);}catch(e){}
+  function vdone(){vb.textContent=vfmt(vtarget);vb.removeAttribute('aria-label');try{localStorage.setItem('rem_views_seen',JSON.stringify({t:vtarget,d:Date.now()}));}catch(e){}}
+  function vroll(){
+    if(vrolled||!vsettled||$('picker').hidden)return;vrolled=true;
+    var from=(vlast>0&&vlast<vtarget)?vlast:0;
+    if(reduce||!vtarget){vdone();return;}
+    var to=vfmt(vtarget),fd=String(from),n=to.replace(/\D/g,'').length;while(fd.length<n)fd='0'+fd;
+    var html='',di=0,moved=0,longest=0;
+    for(var i=0;i<to.length;i++){var c=to.charAt(i);
+      if(c<'0'||c>'9'){html+='<span class="odc">'+c+'</span>';continue;}
+      var a=+fd.charAt(di),z=+c,turns=(moved||a!==z)?Math.min(2,moved):0,steps=((z-a+10)%10)+10*turns,st='';
+      if(moved||a!==z)moved++;di++;
+      for(var q=0;q<=steps;q++)st+='<span>'+((a+q)%10)+'</span>';
+      var dur=steps?1.1+0.22*Math.min(moved,6):0;if(dur>longest)longest=dur;
+      html+='<span class="od"><span class="odr" data-s="'+steps+'" style="transition-duration:'+dur+'s">'+st+'</span></span>';}
+    vb.setAttribute('aria-label',to);vb.innerHTML=html;
+    requestAnimationFrame(function(){requestAnimationFrame(function(){[].forEach.call(vb.querySelectorAll('.odr'),function(r){r.style.transform='translateY(-'+r.getAttribute('data-s')+'em)';});});});
+    setTimeout(vdone,longest*1000+250);}
+  function vgain(g){if(g>0){$('vgain').textContent='+'+vfmt(g)+' in the last 24 hours';$('vgain').hidden=false;}}
+  if(Date.now()-BAKED.at<40*HR)vgain(BAKED.g);
+  (function(){
+    var j=function(r){return r.ok?r.json():null;};
+    if(!window.fetch){vsettled=true;return;}
+    fetch(HUB+'proof.json',{cache:'no-cache'}).then(j).then(function(now){
+      if(!now||!now.reels)return;var RR=now.reels,t=0,n=0;
+      Object.keys(RR).forEach(function(k){var v=(RR[k]&&RR[k].views)||0;if(v>0){t+=v;n++;}});
+      if(t>0&&!vrolled){vtarget=t;vb.textContent=vfmt(t);document.querySelector('#views [data-count]').textContent=n;}
+      vsettled=true;vroll();
+      // "+N in the last 24 hours": today's reading against the one from about a day earlier, from the Hub's history on GitHub
+      var sig=(now.updated||'')+'|'+t;
+      try{var c=JSON.parse(localStorage.getItem('rem_gain24')||'null');if(c&&c.k===sig){$('vgain').hidden=true;vgain(c.g);return;}}catch(e){}
+      return fetch('https://api.github.com/repos/'+HUBREPO+'/commits?path=proof.json&per_page=40').then(j).then(function(cs){
+        if(!cs||!cs.length)return;var t0=Date.parse(cs[0].commit.committer.date),base=null;
+        if(Date.now()-t0>40*HR){$('vgain').hidden=true;return;}
+        for(var i=1;i<cs.length;i++){var d=t0-Date.parse(cs[i].commit.committer.date);if(d>=20*HR){if(d<=30*HR)base=cs[i];break;}}
+        if(!base){$('vgain').hidden=true;return;}
+        return fetch('https://raw.githubusercontent.com/'+HUBREPO+'/'+base.sha+'/proof.json').then(j).then(function(old){
+          if(!old||!old.reels)return;var g=0;
+          Object.keys(RR).forEach(function(k){var a=(RR[k]&&RR[k].views)||0,b=(old.reels[k]&&old.reels[k].views)||0;if(a>0&&b>0&&a>b)g+=a-b;});
+          try{localStorage.setItem('rem_gain24',JSON.stringify({k:sig,g:g}));}catch(e){}
+          $('vgain').hidden=true;vgain(g);});});
+    }).catch(function(){}).then(function(){vsettled=true;vroll();});
+    setTimeout(function(){vsettled=true;vroll();},2500);
+  })();
+
+  function boot(){
+    if(!SUPA_KEY){route();return;}
+    $('lnote').hidden=true;
+    var sc=document.createElement('script');sc.src=SUPA_LIB;
+    sc.onerror=function(){$('lnote').textContent='Sign-in could not load. Refresh the page to try again.';$('lnote').hidden=false;route();};
+    sc.onload=function(){
+      try{sb=window.supabase.createClient(SUPA_URL,SUPA_KEY);}catch(e){sb=null;route();return;}
+      sb.auth.onAuthStateChange(function(ev){if(ev==='PASSWORD_RECOVERY'){recover=true;
+        setTimeout(function(){members().then(function(l){var k=l[0]||'skyway',p=P[k];paintLogo($('lmark'),p);$('llabel').textContent=p.label;$('lblur').src=M+p.tile+'.jpg';
+          $('signform').setAttribute('data-k',k);$('lemail').closest('label').hidden=true;$('lpasslabel').textContent='New password';$('lgo').textContent='Save new password';show('login');});},0);}});
+      sb.auth.getSession().then(function(r){
+        if(!(r.data&&r.data.session)){route();return;}
+        return members().then(route,route);
+      }).catch(route);};
+    document.head.appendChild(sc);}
+  boot();
+})();
+</script>
+</body>
+</html>
