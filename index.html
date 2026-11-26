@@ -362,6 +362,29 @@ footer .f a.fc{color:var(--mute)}
 footer .f a.fc:hover{color:var(--cream)}
 #pnote{font-size:13px;color:#7A2E1E}
 @media(max-width:860px){#about{padding:0 16px 64px}.ab{padding-top:40px}}
+
+/* ---------- agent menu: pick an agent from a list, or type a name ---------- */
+.abar{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;margin-bottom:-24px}
+.abar .back{color:var(--soft)}
+.abar .back:hover{color:var(--cream)}
+.agw{position:relative}
+.agb{display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:9px 16px 9px 18px;color:var(--cream)}
+.agb span{color:var(--mute);font-size:12px}
+.agb svg{transition:transform .18s}
+.agb[aria-expanded="true"]{border-color:var(--cream)}
+.agb[aria-expanded="true"] svg{transform:rotate(180deg)}
+.agp{position:absolute;top:calc(100% + 8px);left:0;z-index:40;width:330px;max-width:calc(100vw - 32px);background:#101713;border:1px solid var(--line2);border-radius:14px;padding:10px;box-shadow:0 18px 50px rgba(0,0,0,.55)}
+.agp input{width:100%;height:44px;border-radius:9px;border:1px solid var(--line2);background:transparent;color:var(--cream);padding:0 12px;font:400 16px var(--body)}
+.agp input::placeholder{color:var(--soft)}
+.agp input:focus{outline:0;border-color:var(--sage)}
+.agp ul{list-style:none;margin:8px 0 0;padding:0;max-height:min(340px,48vh);overflow:auto}
+.agp a{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;color:var(--cream);min-height:44px;font-size:15px}
+.agp a b{font-weight:500}
+.agp a span{color:var(--mute);font-size:13px;white-space:nowrap}
+.agp a:hover,.agp a.hi{background:rgba(244,239,228,.08);color:var(--cream)}
+.agp a[aria-current]{color:var(--sage)}
+.agp .none{padding:12px;color:var(--mute);font-size:14px}
+@media (prefers-reduced-motion:reduce){.agb svg{transition:none}}
 </style>
 </head>
 <body>
@@ -442,6 +465,7 @@ footer .f a.fc:hover{color:var(--cream)}
   </section>
 
   <main class="lib" id="library">
+    <div class="abar" id="abar" hidden></div>
     <div class="chips" id="chips" hidden></div>
     <div id="rows"></div>
   </main>
@@ -594,7 +618,7 @@ footer .f a.fc:hover{color:var(--cream)}
   var ORDER=['skyway','pinnacle','solo','all'];
   /* a page for each agent: reelestatemedia.com/#zain-merchant. Open to everyone, like the reels themselves. */
   var AG={},TAKEN={profiles:1,book:1,packages:1,library:1,about:1};
-  LIB.forEach(function(x){var r=R[x.k];if(!r.as||P[r.as]||TAKEN[r.as])return;(AG[r.as]=AG[r.as]||{name:x.a,co:CO[x.co]||x.co,keys:[]}).keys.push(x.k);});
+  LIB.forEach(function(x){var r=R[x.k];if(!r.as||P[r.as]||TAKEN[r.as])return;(AG[r.as]=AG[r.as]||{name:x.a,co:CO[x.co]||x.co,home:x.co==='S'?'skyway':x.co==='P'?'pinnacle':'solo',keys:[]}).keys.push(x.k);});
   Object.keys(AG).forEach(function(s){var a=AG[s],ini=a.name.split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();
     profile(s,{label:a.name,mark:ini,bg:'#141C18',fg:'#F4EFE4',line:'#3B4A43',locked:false,dl:false,agent:true,home:'All reels',
       badge:a.name+' · '+a.co,pk:'Packages',book:'Want reels like these?',second:'Copy link to this page',first:'Reels with '+a.name},a.keys);});
@@ -704,8 +728,9 @@ footer .f a.fc:hover{color:var(--cream)}
   function hub(k){var p=P[k];state.profile=k;state.active=Math.min(3,Math.floor((p.strip.length-1)/2));state.cat='';state.q='';$('q').value='';
     document.querySelectorAll('[data-mark]').forEach(function(el){paintMark(el,p);});
     document.querySelectorAll('[data-label]').forEach(function(el){el.textContent=p.label;});
+    if(p.agent){var host=hostOf(k);p.rates=host?P[host].rates:null;p.dls=host?P[host].dls:null;p.dl=!!host;p.pk=host?'Your packages':'Packages';}
     $('badge').textContent=p.badge; $('mbadge').textContent=p.badge.toUpperCase();
-    prices(p);
+    prices(p);abar(k);
     $('second').textContent=p.second; $('pkeyebrow').textContent=p.pk; $('booktitle').textContent=p.book;
     var navh=function(base){return p.nav.map(function(n,i){var t=n[1],c=(base+(i===0?' on':'')).trim();return '<button type="button" '+(t.charAt(0)==='#'?'data-scroll="'+t.slice(1)+'"':'data-cat="'+t+'"')+(c?' class="'+c+'"':'')+'>'+esc(n[0])+'</button>';}).join('');};
     $('nav').innerHTML=navh(''); $('mnav').innerHTML=navh('chip');
@@ -713,6 +738,28 @@ footer .f a.fc:hover{color:var(--cream)}
     if(p.chips){ch.hidden=false;ch.innerHTML=[['All','']].concat(Object.keys(CATS).filter(function(c){return pool(p).some(function(q){return c==='wide'?R[q].wide:R[q].cat===c;});}).map(function(c){return [CATS[c],c];})).map(function(c){return '<button type="button" class="chip'+(c[1]===''?' on':'')+'" data-cat="'+c[1]+'">'+c[0]+'</button>';}).join('');}
     else{ch.hidden=true;ch.innerHTML='';}
     strip(); rows();}
+
+  /* ---------- agent menu ---------- */
+  var agl=[],ARW='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>',
+      CARET='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 9l7 7 7-7"></path></svg>';
+  function hostOf(k){var h=AG[k]&&AG[k].home;return h&&P[h]&&P[h].locked&&unlocked[h]?h:null;}   // the office library this agent belongs to, if this visitor has it open
+  function abar(k){var p=P[k],el=$('abar'),scope=p.agent?AG[k].home:k,back='';
+    agl=Object.keys(AG).filter(function(s){return scope==='all'||AG[s].home===scope;}).map(function(s){return {s:s,n:AG[s].name,c:AG[s].keys.length};}).sort(function(a,b){return a.n.localeCompare(b.n);});
+    if(p.agent){var h=hostOf(k)||(AG[k].home==='solo'?'solo':'all');back='<a class="navb back" href="#'+h+'">'+ARW+'Back to '+esc(P[h].label)+'</a>';}
+    var menu=agl.length>(p.agent?1:0);
+    el.hidden=!(back||menu);
+    el.innerHTML=back+(menu?'<div class="agw"><button type="button" class="chip agb" id="agb" aria-haspopup="listbox" aria-expanded="false">'+(p.agent?'Switch agent':'Agents')+'<span>'+agl.length+'</span>'+CARET+'</button>'+
+      '<div class="agp" id="agp" hidden><input id="agq" type="search" placeholder="Find an agent" aria-label="Find an agent" autocomplete="off"><ul id="agl" role="listbox" aria-label="Agents"></ul></div></div>':'');
+    aglist('');}
+  function aglist(q){var ul=$('agl');if(!ul)return;q=q.trim().toLowerCase();var hit=agl.filter(function(a){return a.n.toLowerCase().indexOf(q)>=0;});
+    ul.innerHTML=hit.length?hit.map(function(a,i){return '<li><a href="#'+a.s+'"'+(a.s===state.profile?' aria-current="page"':'')+(i===0&&q?' class="hi"':'')+'><b>'+esc(a.n)+'</b><span>'+a.c+(a.c===1?' reel':' reels')+'</span></a></li>';}).join(''):'<li class="none">No agent by that name.</li>';}
+  function agopen(on){var pn=$('agp'),b=$('agb');if(!pn)return;pn.hidden=!on;b.setAttribute('aria-expanded',on?'true':'false');
+    if(on){$('agq').value='';aglist('');if(window.matchMedia('(hover:hover)').matches)$('agq').focus();}}
+  $('abar').addEventListener('click',function(e){if(e.target.closest('#agb')){agopen($('agp').hidden);return;}if(e.target.closest('.agp a'))agopen(false);});
+  $('abar').addEventListener('input',function(e){if(e.target.id==='agq')aglist(e.target.value);});
+  $('abar').addEventListener('keydown',function(e){if(e.key==='Escape'&&$('agp')&&!$('agp').hidden){agopen(false);$('agb').focus();}
+    if(e.key==='Enter'&&e.target.id==='agq'){e.preventDefault();var a=$('agl').querySelector('a');if(a){track('agentmenu',state.profile,'search');location.hash=a.getAttribute('href').slice(1);}}});
+  document.addEventListener('click',function(e){if($('agp')&&!$('agp').hidden&&!e.target.closest('.agw'))agopen(false);});
 
   /* ---------- screens + routes ---------- */
   function show(id){['picker','login','hub'].forEach(function(s){$(s).hidden=s!==id;});
@@ -726,6 +773,8 @@ footer .f a.fc:hover{color:var(--cream)}
     if(P[k]){var p=P[k];
       if(p.locked&&!unlocked[k]){paintLogo($('lmark'),p);$('llabel').textContent=p.label;$('lblur').src=M+p.tile+'.jpg';$('signform').setAttribute('data-k',k);show('login');if(seen!=='login:'+k){seen='login:'+k;track('view',seen);}return;}
       if(sb&&p.locked&&!p.own&&!p.loading){p.loading=true;var fin=function(){p.loading=false;p.own=true;route();};library(k).then(fin,fin);return;}
+      var hk=p.agent&&hostOf(k);   // an agent page opened by a signed-in office: fetch that office's rates and originals first
+      if(hk&&sb&&!P[hk].own){if(!P[hk].loading){P[hk].loading=true;var fin2=function(){P[hk].loading=false;P[hk].own=true;route();};library(hk).then(fin2,fin2);}return;}
       show('hub');hub(k);if(seen!==k){seen=k;track('view',k);}
       if(after){var a=after;after=null;setTimeout(function(){go(a);},60);}
       return;}
