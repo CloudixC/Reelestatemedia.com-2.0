@@ -385,6 +385,9 @@ footer .f a.fc:hover{color:var(--cream)}
 .agp a[aria-current]{color:var(--sage)}
 .agp .none{padding:12px;color:var(--mute);font-size:14px}
 @media (prefers-reduced-motion:reduce){.agb svg{transition:none}}
+
+.abar .sgn{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:var(--cream);border-color:var(--sage)}
+.abar .sgn:hover{background:var(--cream);color:var(--ink);border-color:var(--cream)}
 </style>
 </head>
 <body>
@@ -746,16 +749,19 @@ footer .f a.fc:hover{color:var(--cream)}
   function abar(k){var p=P[k],el=$('abar'),scope=p.agent?AG[k].home:k,back='';
     agl=Object.keys(AG).filter(function(s){return scope==='all'||AG[s].home===scope;}).map(function(s){return {s:s,n:AG[s].name,c:AG[s].keys.length};}).sort(function(a,b){return a.n.localeCompare(b.n);});
     if(p.agent){var h=hostOf(k)||(AG[k].home==='solo'?'solo':'all');back='<a class="navb back" href="#'+h+'">'+ARW+'Back to '+esc(P[h].label)+'</a>';}
-    var menu=agl.length>(p.agent?1:0);
-    el.hidden=!(back||menu);
+    var menu=agl.length>(p.agent?1:0),ah=p.agent&&AG[k].home,sign='';
+    if(ah&&P[ah]&&P[ah].locked&&!unlocked[ah])sign='<button type="button" class="chip sgn" id="agsign"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>Sign in to download</button>';
+    el.hidden=!(back||menu||sign);
     el.innerHTML=back+(menu?'<div class="agw"><button type="button" class="chip agb" id="agb" aria-haspopup="listbox" aria-expanded="false">'+(p.agent?'Switch agent':'Agents')+'<span>'+agl.length+'</span>'+CARET+'</button>'+
-      '<div class="agp" id="agp" hidden><input id="agq" type="search" placeholder="Find an agent" aria-label="Find an agent" autocomplete="off"><ul id="agl" role="listbox" aria-label="Agents"></ul></div></div>':'');
+      '<div class="agp" id="agp" hidden><input id="agq" type="search" placeholder="Find an agent" aria-label="Find an agent" autocomplete="off"><ul id="agl" role="listbox" aria-label="Agents"></ul></div></div>':'')+sign;
     aglist('');}
   function aglist(q){var ul=$('agl');if(!ul)return;q=q.trim().toLowerCase();var hit=agl.filter(function(a){return a.n.toLowerCase().indexOf(q)>=0;});
     ul.innerHTML=hit.length?hit.map(function(a,i){return '<li><a href="#'+a.s+'"'+(a.s===state.profile?' aria-current="page"':'')+(i===0&&q?' class="hi"':'')+'><b>'+esc(a.n)+'</b><span>'+a.c+(a.c===1?' reel':' reels')+'</span></a></li>';}).join(''):'<li class="none">No agent by that name.</li>';}
   function agopen(on){var pn=$('agp'),b=$('agb');if(!pn)return;pn.hidden=!on;b.setAttribute('aria-expanded',on?'true':'false');
     if(on){$('agq').value='';aglist('');if(window.matchMedia('(hover:hover)').matches)$('agq').focus();}}
-  $('abar').addEventListener('click',function(e){if(e.target.closest('#agb')){agopen($('agp').hidden);return;}if(e.target.closest('.agp a'))agopen(false);});
+  var back2=null;   // the agent page to return to after signing in from it
+  $('abar').addEventListener('click',function(e){if(e.target.closest('#agsign')){back2=state.profile;track('signin-ask',state.profile);location.hash=AG[state.profile].home;return;}
+    if(e.target.closest('#agb')){agopen($('agp').hidden);return;}if(e.target.closest('.agp a'))agopen(false);});
   $('abar').addEventListener('input',function(e){if(e.target.id==='agq')aglist(e.target.value);});
   $('abar').addEventListener('keydown',function(e){if(e.key==='Escape'&&$('agp')&&!$('agp').hidden){agopen(false);$('agb').focus();}
     if(e.key==='Enter'&&e.target.id==='agq'){e.preventDefault();var a=$('agl').querySelector('a');if(a){track('agentmenu',state.profile,'search');location.hash=a.getAttribute('href').slice(1);}}});
@@ -776,11 +782,11 @@ footer .f a.fc:hover{color:var(--cream)}
       if(sb&&p.locked&&!p.own&&!p.loading){p.loading=true;var fin=function(){p.loading=false;p.own=true;route();};library(k).then(fin,fin);return;}
       var hk=p.agent&&hostOf(k);   // an agent page opened by a signed-in office: fetch that office's rates and originals first
       if(hk&&sb&&!P[hk].own){if(!P[hk].loading){P[hk].loading=true;var fin2=function(){P[hk].loading=false;P[hk].own=true;route();};library(hk).then(fin2,fin2);}return;}
-      show('hub');hub(k);if(seen!==k){seen=k;track('view',k);}
+      if(!p.agent)back2=null;show('hub');hub(k);if(seen!==k){seen=k;track('view',k);}
       if(after){var a=after;after=null;setTimeout(function(){go(a);},60);}
       return;}
     if(k==='book'||k==='packages'||k==='library'||k==='about'){if(state.profile&&!$('hub').hidden){return;} after=k;location.hash='solo';return;}
-    show('picker');if(seen!=='picker'){seen='picker';track('view','picker');}}
+    back2=null;show('picker');if(seen!=='picker'){seen='picker';track('view','picker');}}
   function go(id){var el=$(id);if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});}
   window.addEventListener('hashchange',route);
   /* ---------- partner sign-in (Supabase) ---------- */
@@ -806,9 +812,9 @@ footer .f a.fc:hover{color:var(--cream)}
         if(!keys.length)return;
         P[k].rows=[{title:'For '+P[k].label+' agents',sub:'Private to your office',wrap:true,items:keys}].concat(P[k].rows.filter(function(r){return !r.priv;}));
         P[k].rows[0].priv=true;});});}
-  function enter(k){if(location.hash==='#'+k)route();else location.hash=k;}
+  function enter(k){if(back2&&AG[back2]&&AG[back2].home===k){k=back2;}back2=null;if(location.hash==='#'+k)route();else location.hash=k;}
   $('signform').addEventListener('submit',function(e){e.preventDefault();var k=this.getAttribute('data-k');lerr('');
-    if(!sb){unlocked[k]=true;$('lemail').value='';$('lpass').value='';route();return;}
+    if(!sb){unlocked[k]=true;$('lemail').value='';$('lpass').value='';enter(k);return;}
     var em=$('lemail').value.trim(),pw=$('lpass').value,down='We could not reach the sign-in service. Check your connection and try again.';
     if(recover){if(pw.length<8){lerr('Choose a password of at least 8 characters.');return;}
       busy(true);sb.auth.updateUser({password:pw}).then(function(r){
