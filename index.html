@@ -386,8 +386,7 @@ footer .f a.fc:hover{color:var(--cream)}
 .agp .none{padding:12px;color:var(--mute);font-size:14px}
 @media (prefers-reduced-motion:reduce){.agb svg{transition:none}}
 
-.abar .sgn{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:var(--cream);border-color:var(--sage)}
-.abar .sgn:hover{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+#agsign{gap:9px;margin-left:auto}
 </style>
 </head>
 <body>
@@ -461,6 +460,7 @@ footer .f a.fc:hover{color:var(--cream)}
           </div>
           <button type="button" class="btn cream" id="watch"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4v16l13-8z"></path></svg>Watch reel</button>
           <button type="button" class="btn ghost" id="second"></button>
+          <button type="button" class="btn ghost" id="agsign" hidden><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>Sign in to download</button>
         </div>
         <div class="mnav" id="mnav"></div>
       </div>
@@ -751,7 +751,7 @@ footer .f a.fc:hover{color:var(--cream)}
     agl=Object.keys(AG).filter(function(s){return scope==='all'||AG[s].home===scope;}).map(function(s){return {s:s,n:AG[s].name,c:AG[s].keys.length};}).sort(function(a,b){return a.n.localeCompare(b.n);});
     if(p.agent){var h=hostOf(k)||(AG[k].home==='solo'?'solo':'all');back='<a class="navb back" href="#'+h+'">'+ARW+'Back to '+esc(P[h].label)+'</a>';}
     var menu=agl.length>(p.agent?1:0),ah=p.agent&&AG[k].home,sign='';
-    if(ah&&P[ah]&&P[ah].locked&&!unlocked[ah])sign='<button type="button" class="chip sgn" id="agsign"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>Sign in to download</button>';
+    $('agsign').hidden=!(ah&&P[ah]&&P[ah].locked&&!unlocked[ah]);   // an agent's page: their office signs in to download
     el.hidden=!(back||menu||sign);
     el.innerHTML=back+(menu?'<div class="agw"><button type="button" class="chip agb" id="agb" aria-haspopup="listbox" aria-expanded="false">'+(p.agent?'Switch agent':'Agents')+'<span>'+agl.length+'</span>'+CARET+'</button>'+
       '<div class="agp" id="agp" hidden><input id="agq" type="search" placeholder="Find an agent" aria-label="Find an agent" autocomplete="off"><ul id="agl" role="listbox" aria-label="Agents"></ul></div></div>':'')+sign;
@@ -761,7 +761,8 @@ footer .f a.fc:hover{color:var(--cream)}
   function agopen(on){var pn=$('agp'),b=$('agb');if(!pn)return;pn.hidden=!on;b.setAttribute('aria-expanded',on?'true':'false');
     if(on){$('agq').value='';aglist('');if(window.matchMedia('(hover:hover)').matches)$('agq').focus();}}
   var back2=null;   // the agent page to return to after signing in from it
-  $('abar').addEventListener('click',function(e){if(e.target.closest('#agsign')){back2=state.profile;track('signin-ask',state.profile);location.hash=AG[state.profile].home;return;}
+  $('agsign').addEventListener('click',function(){back2=state.profile;track('signin-ask',state.profile);location.hash=AG[state.profile].home;});
+  $('abar').addEventListener('click',function(e){
     if(e.target.closest('#agb')){agopen($('agp').hidden);return;}if(e.target.closest('.agp a'))agopen(false);});
   $('abar').addEventListener('input',function(e){if(e.target.id==='agq')aglist(e.target.value);});
   $('abar').addEventListener('keydown',function(e){if(e.key==='Escape'&&$('agp')&&!$('agp').hidden){agopen(false);$('agb').focus();}
