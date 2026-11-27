@@ -515,7 +515,7 @@ footer .f a.fc:hover{color:var(--cream)}
       <div class="bkc">
         <a class="btn cream" href="https://calendly.com/hello-reelestatemedia" target="_blank" rel="noopener">Book a shoot on Calendly</a>
         <a class="btn ghost" href="https://calendly.com/hello-reelestatemedia/initial-consultation" target="_blank" rel="noopener">Book an initial consultation</a>
-        <a class="btn ghost" href="#packages" data-scroll="packages">See every price</a>
+        <a class="btn ghost" id="seeprices" href="#packages" data-scroll="packages">See every price</a>
         <p>Booking opens in a new tab. Every agent who books gets their own Content Hub to review and download the work.</p>
       </div>
     </div>
@@ -604,7 +604,7 @@ footer .f a.fc:hover{color:var(--cream)}
     var tall=keys.filter(function(q){return !R[q].wide;}),wide=keys.filter(function(q){return R[q].wide;});
     var cats=Object.keys(TAGS).filter(function(c){return keys.some(function(q){return R[q].cat===c;});});
     o.strip=(tall.length?tall:keys).slice(0,7);o.tile='vault/'+(o.strip[0]||keys[0]||'');o.count=keys.length;
-    o.nav=[[o.home||'Home','']].concat(cats.slice(0,3).map(function(c){return [CATS[c],c];})).concat([['Packages','#packages']]);
+    o.nav=[[o.home||'Home','']].concat(cats.slice(0,3).map(function(c){return [CATS[c],c];})).concat(o.agent?[['Book a shoot','#book']]:[['Packages','#packages']]);
     if(keys.length<=10){o.rows=[{title:o.first,sub:keys.length+(keys.length===1?' reel':' reels'),wrap:true,items:keys}];}
     else{o.chips=true;o.rows=[{title:'Latest',sub:'Most recent first',items:keys.slice(0,12)}].concat(cats.map(function(c){
         var it=keys.filter(function(q){return R[q].cat===c&&!R[q].wide;});return {title:CATS[c],sub:it.length+(it.length===1?' reel':' reels'),items:it};}).filter(function(r){return r.items.length;}));
@@ -734,6 +734,7 @@ footer .f a.fc:hover{color:var(--cream)}
     if(p.agent){var host=hostOf(k);p.rates=host?P[host].rates:null;p.dls=host?P[host].dls:null;p.dl=!!host;p.pk=host?'Your packages':'Packages';}
     $('badge').textContent=p.badge; $('mbadge').textContent=p.badge.toUpperCase();
     prices(p);abar(k);
+    $('packages').hidden=!!p.agent;$('seeprices').hidden=!!p.agent;   // an agent's own page shows no prices
     $('second').textContent=p.second; $('pkeyebrow').textContent=p.pk; $('booktitle').textContent=p.book;
     var navh=function(base){return p.nav.map(function(n,i){var t=n[1],c=(base+(i===0?' on':'')).trim();return '<button type="button" '+(t.charAt(0)==='#'?'data-scroll="'+t.slice(1)+'"':'data-cat="'+t+'"')+(c?' class="'+c+'"':'')+'>'+esc(n[0])+'</button>';}).join('');};
     $('nav').innerHTML=navh(''); $('mnav').innerHTML=navh('chip');
