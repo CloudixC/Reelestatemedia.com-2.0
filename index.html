@@ -709,12 +709,18 @@ footer .f a.fc:hover{color:var(--cream)}
       ['Event Recap Package · Photo and Video','Two hours on site. Both, in one booking.',[700],'event-recap']]]
   ];
   function money(n){return '$'+String(n).replace(/\B(?=(\d{3})+$)/g,',');}
+  /* Every reel is priced at the standard (Tier 2) level. Tier 1 is an add-on: $100 more per reel, the same on every rate card.
+     The names in PRICES keep their old "· Tier n" ending because the partner rate cards in Supabase are keyed by them; lab() drops it for display. */
+  var TIER1=100;
+  function lab(r){return r[0].replace(/ \u00B7 Tier \d$/,'');}
   function prices(p){var own=p.rates,val=function(r){var v=own?own[r[0]]:r[2];return v&&v.length?v:null;};
     $('prices').innerHTML=PRICES.map(function(g){var rows=g[1].filter(val);
       return rows.length?'<div class="pgrp"><h3>'+g[0]+'</h3>'+rows.map(function(r){var v=val(r);
-        return '<div class="prow"><div class="nm"><b>'+esc(r[0])+'</b><span>'+esc(r[1])+'</span></div><div class="ps">'+
+        return '<div class="prow"><div class="nm"><b>'+esc(lab(r))+'</b><span>'+esc(r[1])+'</span></div><div class="ps">'+
           v.map(function(x,i){return '<div><small>'+(v.length>1?R3[i]:'&nbsp;')+'</small><b>'+money(x)+'</b></div>';}).join('')+
-          '</div><a class="bk1" href="'+CAL+'/'+r[3]+'" target="_blank" rel="noopener" aria-label="Book '+esc(r[0])+' on Calendly">Book</a></div>';}).join('')+'</div>':'';}).join('');
+          '</div><a class="bk1" href="'+CAL+'/'+r[3]+'" target="_blank" rel="noopener" aria-label="Book '+esc(lab(r))+' on Calendly">Book</a></div>'+
+          (r===g[1][1]||(r===g[1][0]&&rows.indexOf(g[1][1])<0)?(g===PRICES[0]?'<div class="prow"><div class="nm"><b>Tier 1 upgrade</b><span>For a longer or higher-quality reel, with enhanced production and delivery. Tell us when you book.</span></div>'+
+            '<div class="ps"><div><small>per reel</small><b>+'+money(TIER1)+'</b></div></div><span class="bk1" style="visibility:hidden" aria-hidden="true">Book</span></div>':''):'');}).join('')+'</div>':'';}).join('');
     var d=val(PRICES[0][1][0])||PRICES[0][1][0][2],l=PRICES[1][1],a=val(l[2])||l[2][2],b=val(l[3])||l[3][2];
     $('pk1').innerHTML=money(d[0])+' <small>per reel, 5 for '+money(d[1])+', 10 for '+money(d[2])+'</small>';
     $('pk2').firstChild.nodeValue=money(a[0])+' ';
