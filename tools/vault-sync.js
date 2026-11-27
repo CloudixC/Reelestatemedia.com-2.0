@@ -21,7 +21,13 @@
     .replace(/[\s_\-]+v(?:er(?:sion)?)?[\s_\-]?\d+(?:[\s_\-]?[A-Za-z])?$/i,'').replace(/[\s_\-]+(?:final|updated|revised|fixed|new)\d*$/i,'').replace(/[\s_\-]+$/,'').toLowerCase();}
   function collapse(files){var newest={};files.forEach(function(f,ix){var b=clipBase(f.name),cur=newest[b],key=(f.t||'')+'|'+String(ix).padStart(4,'0');if(!cur||key>cur.key)newest[b]={key:key,id:f.id};});
     return files.filter(function(f){return newest[clipBase(f.name)].id===f.id;});}
-  function finalSource(d,media,APPR){var vers=d.reviewVersions||[],src=(d.approved&&d.approved.src)||'';
+  function finalSource(d,media,APPR){return fullQuality(d,pickSource(d,media,APPR));}
+  /* The client reviews a small "web preview" copy kept in its own folder (pvFolder). Once that version is approved, or the piece is delivered,
+     the file to use is the full-quality original it was made from (reviewHQ, else pvFor / dlvFolder), never the preview. */
+  function fullQuality(d,fs){if(!fs.folder||!d.pvFolder||fs.folder!==d.pvFolder||!(d.approved||d.status==='Delivered'))return fs;
+    var hq=String(d.reviewHQ||'');if(/\/file\/d\//.test(hq))return {file:driveId(hq),folder:''};
+    var f=(isFolder(hq)?driveId(hq):'')||d.pvFor||d.dlvFolder||'';return f&&f!==d.pvFolder?{file:'',folder:f}:fs;}
+  function pickSource(d,media,APPR){var vers=d.reviewVersions||[],src=(d.approved&&d.approved.src)||'';
     if(!src&&APPR[d.id]&&vers.length)src=vers[Math.min(APPR[d.id],vers.length)-1]||'';
     var first=String(src).split(',').map(function(p){return p.trim();}).filter(function(p){return /drive\.google|docs\.google/.test(p);})[0]||'';
     if(first&&/\/file\/d\//.test(first))return {file:driveId(first),folder:''};
