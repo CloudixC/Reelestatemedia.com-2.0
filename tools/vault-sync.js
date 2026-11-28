@@ -108,6 +108,8 @@
     for(const hf of heldFiles){var hh=await sha(hf.id);if(man.on[hh])onSite.push({reel:man.on[hh],agent:hf.agent,title:hf.title});}
     return {ok:true,finals:finals.length,unpaid:heldFiles.length,unpaidList:heldFiles.map(function(x){return {agent:x.agent,title:x.title,project:x.project};}),unpaidOnSite:onSite};};
   /* after new reels are on the site: let the brokerage's library hand out the original file. rows: [{lib:'pinnacle',key:'v80',id:'<drive file id>'}] */
+  /* a reel taken off the site because it is held until paid: the brokerage library stops handing out its original. rows: [{lib:'pinnacle',key:'v19'}] */
+  window.remVaultUnlink=async function(rows){var bk=localStorage.getItem('rem_sbk_v1'),n=0;for(const r of rows){if(r.lib!=='pinnacle'&&r.lib!=='skyway')continue;await rpc('rem_site_undownload',{k:bk,lib:r.lib,reel:r.key});n++;}return n;};
   window.remVaultLink=async function(rows){var bk=localStorage.getItem('rem_sbk_v1'),n=0,skip={};
     try{var db=JSON.parse(localStorage.getItem('rem_pipeline_v1')||'{}'),APPR={};try{APPR=JSON.parse(localStorage.getItem('vault_appr')||'{}')||{};}catch(e){}
       var hf=[];await collect(db,APPR,(db.settings||{}).driveApiKey||'',[],hf);hf.forEach(function(x){skip[x.id]=1;});}catch(e){}

@@ -39,7 +39,7 @@ def main():
     idx = os.path.join(ROOT, 'index.html'); s = io.open(idx, encoding='utf8').read()
     a = s.index('/*LIB*/') + 7; b = s.index('/*END*/'); lib = json.loads(s[a:b])
     man_p = os.path.join(V, 'manifest.json'); man = json.load(open(man_p))
-    used = [int(k[1:]) for k in list(man['on'].values()) + list(man.get('hold', {}).values()) + [r['k'] for r in lib] if re.fullmatch(r'v\d+', k)]
+    used = [int(k[1:]) for k in list(man['on'].values()) + list(man.get('hold', {}).values()) + list(man.get('unpaid', {}).values()) + [r['k'] for r in lib] if re.fullmatch(r'v\d+', k)]
     nxt = max(used + [0]) + 1
     done, failed = [], []
     for it in items:
@@ -80,7 +80,7 @@ def main():
         row = {'k': key, 't': title, 'a': agent, 'co': it.get('co') or 'Independent', 'c': it.get('c') or category((it.get('title') or '') + ' ' + (it.get('project') or '')),
                'l': '%d:%02d' % (sec // 60, sec % 60), 'dt': (it.get('date') or '')[:10]}
         if not tall: row['w'] = 1
-        lib.append(row); man['on'][it['h']] = key; nxt += 1
+        lib.append(row); man['on'][it['h']] = key; man.get('unpaid', {}).pop(it['h'], None); nxt += 1   # back on the site after being held until paid
         done.append({'key': key, 'title': title, 'agent': agent, 'co': row['co'], 'cat': row['c'], 'id': it['id'],
                      'lib': 'pinnacle' if row['co'] == 'P' else 'skyway' if row['co'] == 'S' else ''})
     lib.sort(key=lambda r: (r['dt'], r['k']), reverse=True)
